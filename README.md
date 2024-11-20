@@ -8,7 +8,7 @@ It is intended to be used with the community deck feature of Bunpro, hence the c
 
 You need to have python installed (ideally Python 3.12).
 
-Download this repository and open a command prompt in the root folder. 
+Download this repository (using the "code -> download zip" option above the files list at the top). Open a command prompt in the downloaded folder after extracting. 
 
 Run this to install all dependencies:
 ```
@@ -24,6 +24,13 @@ python main.py "FOLDER_PATH"
 Replace FOLDER_PATH with the path containing the manga files. If you enter a parent folder containing multiple volumes, add "--parent" before the folder path.
 
 This will generate a vocab.csv file containing all words.
+
+# TODO
+
+* Upload to PyPi and make usage much easier and simpler
+* Live Output from Mokuro (it can take very long)
+* Separate outputs for each volume
+* Added translations through dictionary lookup?
 
 # Acknowledgements
 
