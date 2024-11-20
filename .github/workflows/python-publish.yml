@@ -7,8 +7,8 @@ jobs:
     name: Publish release to PyPI
     runs-on: ubuntu-latest
     environment:
-      name: pypi
-      url: https://pypi.org/project/manga-wordlist-extractor/
+      name: manga-wordlist-extractor
+      url: https://upload.pypi.org/legacy/
     permissions:
       id-token: write
     steps:
