@@ -32,10 +32,12 @@ You can now run the tool from the src/main/main.py file.
 # Usage
 
 ```
-manga-wordlist-extractor "FOLDER_PATH"
+manga-wordlist-extractor [-h] [--parent] folder
 ```
 
-Replace FOLDER_PATH with the path containing the manga files. If you enter a parent folder containing multiple volumes, add "--parent" before the folder path.
+Replace folder with the path containing the manga files. Make sure to surround it with quotation marks if there are spaces in the path! 
+
+If you enter a parent folder containing multiple volumes, add "--parent" before the folder path.
 
 This will generate a vocab.csv file containing all words.
 
