@@ -30,4 +30,9 @@ setup(
         'Programming Language :: Python :: 3.10',
     ],
     python_requires='>=3.7',
+    entry_points={
+        'console_scripts': [
+            'manga-wordlist-extractor=main:main',
+        ],
+    },
 )
