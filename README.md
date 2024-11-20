@@ -25,6 +25,10 @@ Replace FOLDER_PATH with the path containing the manga files. If you enter a par
 
 This will generate a vocab.csv file containing all words.
 
+# Notices
+
+If you run into errors, look into the mokuro repository linked at the bottom. There might be some issues with python version compatibility.
+
 # TODO
 
 * Upload to PyPi and make usage much easier and simpler
