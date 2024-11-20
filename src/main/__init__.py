@@ -7,8 +7,4 @@ from .tokenizer import vocab_from_texts
 from .main import main
 
 # Define what is available when the package is imported
-__all__ = [
-    'text_from_folder',
-    'vocab_from_texts',
-    'main'
-]
+__all__ = ["text_from_folder", "vocab_from_texts", "main"]
