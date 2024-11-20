@@ -4,6 +4,7 @@
 # Standard library imports
 from pathlib import Path
 import csv
+import logging
 
 # Local application imports
 import ocr
@@ -18,13 +19,15 @@ def parse_arguments():
     return parser.parse_args()
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     args = parse_arguments()
 
     provided_folder = Path(args.folder)
 
     texts = ocr.text_from_folder(provided_folder, args.parent)
+    logging.debug(f"Texts: {texts}") 
     vocab = separator.vocab_from_texts(texts)
-    print(f"Vocabulary: {vocab}")
+    logging.info(f"Vocabulary: {vocab}")
 
     output_folder = provided_folder.parent
     if args.parent:

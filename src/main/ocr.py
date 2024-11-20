@@ -4,6 +4,7 @@
 # Standard library imports
 import subprocess
 import json
+import logging
 from pathlib import Path
 
 def text_from_folder(path: str, is_parent: bool) -> str:
@@ -17,21 +18,21 @@ def run_mokuro(path: Path, is_parent: bool) -> None:
             command.append('--parent_dir=' + path.as_posix())
         else:
             command.append(path.as_posix())
-        print(f"Running command: {' '.join(command)}")
-        print("This may take a while...")
+        logging.info(f"Running mokuro with command: {command}")
+        logging.info("This may take a while...")
         result = subprocess.run(
             command,
             capture_output=True,
             text=True,
             check=True
         )
-        print("Mokuro output:")
-        print(result.stdout)
+        logging.info("Mokuro finished running. Output:")
+        logging.info(result.stdout)
         if result.stderr:
-            print("Mokuro errors:")
-            print(result.stderr)
+            logging.error("Mokuro errors:")
+            logging.error(result.stderr)
     except subprocess.CalledProcessError as e:
-        print(f"Error executing mokuro: {e}")
+        logging.error("Mokuro failed to run.")
 
 def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list:
     base_path = path if is_parent else path.parent
