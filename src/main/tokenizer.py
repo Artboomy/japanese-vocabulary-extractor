@@ -19,9 +19,9 @@ def vocab_from_texts(texts: list) -> set:
         parsed = mecab.parse(text)
         words = parsed.split("\n")
         for word in words:
-            if word == "EOS" or word == "" or len(word) < 4:
-                continue
             word_info = word.split("\t")
+            if word == "EOS" or word == "" or len(word_info) < 4:
+                continue
             # For some reason the 4th element contains the english translation
             # for katakana-only words, so we differentiate between katakana-only
             # words and other words
