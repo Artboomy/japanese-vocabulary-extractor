@@ -51,7 +51,6 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
-* Upload to PyPi and make usage much easier and simpler
 * Live Output from Mokuro (it can take very long)
 * Separate outputs for each volume
 * Added translations through dictionary lookup?
