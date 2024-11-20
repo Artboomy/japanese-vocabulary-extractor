@@ -3,12 +3,13 @@
 
 # Standard library imports
 from pathlib import Path
-import csv
+
 import logging
 
 # Local application imports
 from . import ocr
 from . import separator
+from . import csv
 
 def parse_arguments():
     """Parse command-line arguments."""
@@ -29,18 +30,9 @@ def main():
     vocab = separator.vocab_from_texts(texts)
     logging.info(f"Vocabulary: {vocab}")
 
-    output_folder = provided_folder.parent
-    if args.parent:
-        output_folder = provided_folder
+    output_folder = provided_folder if args.parent else provided_folder.parent
     output_file = output_folder / "vocab.csv"
-    save_vocab_to_csv(vocab, output_file)
-    
-def save_vocab_to_csv(vocab: set, output_file: Path):
-    with open(output_file, 'w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(["word"])
-        for word in vocab:
-            writer.writerow([word])
-        
+    csv.save_vocab_to_csv(vocab, output_file)
+            
 if __name__ == "__main__":
     main()
