@@ -29,6 +29,8 @@ This will generate a vocab.csv file containing all words.
 
 If you run into errors, look into the mokuro repository linked at the bottom. There might be some issues with python version compatibility.
 
+Also important: This script is not perfect. The text recognition can make mistakes and some of the extracted vocab can be wrong. If this proves to be a big issue I will look for a different method to parse vocabulary from the text.
+
 # TODO
 
 * Upload to PyPi and make usage much easier and simpler
