@@ -61,5 +61,6 @@ Also important: This script is not perfect. The text recognition can make mistak
 This is hardly my work, I just stringed together some amazing libraries:
 
 * mokuro, to extract lines of text from manga - https://github.com/kha-white/mokuro
-* nagisa, to extract words from those lines of text - https://pypi.org/project/nagisa/
+* mecab-python3, to tokenize japanese text and extract the dictionary forms - https://github.com/SamuraiT/mecab-python3
+* unidic_lite, for data necessary for mecab to work - https://github.com/polm/unidic-lite
 
