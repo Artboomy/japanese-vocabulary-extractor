@@ -6,10 +6,10 @@ from pathlib import Path
 import logging
 
 # Local application imports
-from . import ocr
-from . import tokenizer
-from . import csv
-from . import args
+from main import ocr
+from main import tokenizer
+from main import csv
+from main import args
 
 
 def main():
