@@ -12,7 +12,12 @@ setup(
     license="GLPv3",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    install_requires=["nagisa", "regex", "tqdm", "mokuro"],
+    install_requires=[
+        "regex",
+        "mokuro",
+        "mecab-python3",
+        "unidic-lite",
+    ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
