@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='manga-wordlist-extractor',
-    version='0.1.4',
+    version='0.1.10',
     description='A utility to extract vocabulary lists from manga.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -10,8 +10,8 @@ setup(
     author_email='ySZ39@proton.me',
     url='https://github.com/Fluttrr/manga-wordlist-extractor',
     license='GLPv3',
-    packages=find_packages(where='src/main'),
-    package_dir={'': 'src/main'},
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     install_requires=[
         'nagisa',
         'regex',

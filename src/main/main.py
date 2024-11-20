@@ -7,8 +7,8 @@ import csv
 import logging
 
 # Local application imports
-import ocr
-import separator
+from . import ocr
+from . import separator
 
 def parse_arguments():
     """Parse command-line arguments."""
