@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='manga-wordlist-extractor',
-    version='0.1.1',
+    version='0.1.2',
     description='A utility to extract vocabulary lists from manga.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -31,7 +31,7 @@ setup(
     python_requires='>=3.7',
     entry_points={
         'console_scripts': [
-            'manga-wordlist-extractor=main:main',
+            'manga-wordlist-extractor=main.main:main',
         ],
     },
 )
