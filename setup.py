@@ -9,6 +9,7 @@ setup(
     author='Fluttrr',
     author_email='ySZ39@proton.me',
     url='https://github.com/Fluttrr/manga-wordlist-extractor',
+    download_url='https://github.com/Fluttrr/manga-wordlist-extractor/archive/refs/tags/v0.1.tar.gz',
     license='GLPv3',
     packages=find_packages(where='src/main'),
     package_dir={'': 'src/main'},
