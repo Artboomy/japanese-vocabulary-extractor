@@ -18,7 +18,7 @@ def parse_arguments():
         "--type",
         type=str,
         required=True,
-        help="Type of input. Can be 'manga' or 'pdf'. Default is manga. If manga, provide a folder, otherwise provide the file or a folder of multiple files.",
+        help="Type of input. Can be 'manga', 'pdf' or 'epub'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files.",
     )
     parser.add_argument(
         "input_path",

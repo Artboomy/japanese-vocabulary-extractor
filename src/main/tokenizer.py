@@ -3,6 +3,7 @@
 
 # Standard library imports
 import regex as re
+import logging
 
 # Third-party imports (install these with pip)
 import MeCab
