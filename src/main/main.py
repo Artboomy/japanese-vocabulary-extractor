@@ -54,7 +54,7 @@ def texts_from_manga(provided_path: Path, is_parent: bool) -> list:
 
     output_file = get_output_file_path(provided_path, "manga", is_parent)
 
-    return texts, output_file
+    return texts
 
 
 def texts_from_pdf(provided_path: Path) -> list:
