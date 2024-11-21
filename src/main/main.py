@@ -51,9 +51,6 @@ def texts_from_manga(provided_path: Path, is_parent: bool) -> list:
         logging.error("Provided path is not a directory.")
         return
     texts.extend(ocr.text_from_folder(provided_path, is_parent))
-
-    output_file = get_output_file_path(provided_path, "manga", is_parent)
-
     return texts
 
 
