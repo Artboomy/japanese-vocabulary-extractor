@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="manga-wordlist-extractor",
-    version="0.2.1",
+    name="japanese-vocabulary-extractor",
+    version="0.3.0",
     description="A utility to extract vocabulary lists from manga.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     author="Fluttrr",
     author_email="ySZ39@proton.me",
-    url="https://github.com/Fluttrr/manga-wordlist-extractor",
+    url="https://github.com/Fluttrr/japanese-vocabulary-extractor",
     license="GLPv3",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
@@ -33,7 +33,7 @@ setup(
     python_requires=">=3.7",
     entry_points={
         "console_scripts": [
-            "manga-wordlist-extractor=main.main:main",
+            "japanese-vocabulary-extractor=main.main:main",
         ],
     },
 )
