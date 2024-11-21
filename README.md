@@ -8,8 +8,6 @@ The resulting csv can be imported to Anki (if you add the english definitions) o
 
 You need to have python installed (ideally Python 3.12).
 
-## Using pip
-
 Install the package using
 ```
 pip install japanese-vocabulary-extractor
