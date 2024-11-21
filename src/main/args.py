@@ -15,6 +15,11 @@ def parse_arguments():
         help="Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.",
     )
     parser.add_argument(
+        "--add-english",
+        action="store_true",
+        help="Looks up and adds the English translation of each word to the CSV file.",
+    )
+    parser.add_argument(
         "--type",
         type=str,
         required=True,

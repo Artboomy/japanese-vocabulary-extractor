@@ -16,7 +16,7 @@ from main import epub
 
 def main():
     logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
     )
     user_args = args.parse_arguments()
     provided_path = Path(user_args.input_path)
@@ -43,6 +43,9 @@ def main():
     vocab = tokenizer.vocab_from_texts(texts)
     logging.info(f"Vocabulary: {vocab}")
     csv.save_vocab_to_csv(vocab, output_file)
+
+    if user_args.add_english:
+        csv.add_english_to_vocab(output_file)
 
 
 def texts_from_manga(provided_path: Path, is_parent: bool) -> list:

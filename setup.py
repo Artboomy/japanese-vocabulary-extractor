@@ -19,6 +19,7 @@ setup(
         "unidic-lite",
         "pypdf",
         "ebooklib",
+        "tqdm",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
