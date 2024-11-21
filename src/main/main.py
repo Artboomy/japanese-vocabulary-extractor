@@ -23,14 +23,18 @@ def main():
     output_file = None
     texts = []
 
-    if user_args.type == "manga":
-        texts = texts_from_manga(provided_path, user_args.parent)
-
-    if user_args.type == "pdf":
-        texts = texts_from_pdf(provided_path)
-
-    if user_args.type == "epub":
-        texts = texts_from_epub(provided_path)
+    match user_args.type:
+        case "manga":
+            texts = texts_from_manga(provided_path, user_args.parent)
+        case "pdf":
+            texts = texts_from_pdf(provided_path)
+        case "epub":
+            texts = texts_from_epub(provided_path)
+        case "text":
+            texts = texts_from_text_file(provided_path)
+        case _:
+            logging.error("Invalid type provided.")
+            exit(1)
 
     logging.debug(f"Texts: {texts[:50]}")
 
@@ -54,7 +58,6 @@ def texts_from_manga(provided_path: Path, is_parent: bool) -> list:
 
 
 def texts_from_pdf(provided_path: Path) -> list:
-    pdfs = []
     texts = []
     pdfs = get_files(provided_path, "pdf")
     for pdf_path in pdfs:
@@ -63,7 +66,6 @@ def texts_from_pdf(provided_path: Path) -> list:
 
 
 def texts_from_epub(provided_path: Path) -> list:
-    epubs = []
     texts = []
     epubs = get_files(provided_path, "epub")
     for epub_path in epubs:
@@ -71,10 +73,18 @@ def texts_from_epub(provided_path: Path) -> list:
     return texts
 
 
+def texts_from_text_file(provided_path: Path) -> list:
+    files = get_files(provided_path, "txt")
+    texts = []
+    for file in files:
+        texts.extend(file.read_text().split())
+    return texts
+
+
 def get_files(provided_path: Path, extension: str) -> list:
     files = []
     if provided_path.is_dir():
-        files = provided_path.rglob(f"*.{extension}")
+        files = provided_path.rglob(f"*.{extension}", case_sensitive=False)
     elif provided_path.is_file():
         files = [provided_path]
     else:
