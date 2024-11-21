@@ -5,6 +5,7 @@ cryptography==43.0.3
 Cython==3.0.11
 docutils==0.21.2
 dyNET38==2.2
+EbookLib==0.18
 filelock==3.16.1
 fire==0.7.0
 fsspec==2024.10.0
@@ -20,6 +21,7 @@ jeepney==0.8.0
 Jinja2==3.1.4
 keyring==25.5.0
 loguru==0.7.2
+lxml==5.3.0
 manga-ocr==0.1.13
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
