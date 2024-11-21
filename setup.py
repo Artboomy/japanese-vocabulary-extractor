@@ -12,12 +12,7 @@ setup(
     license="GLPv3",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    install_requires=[
-        "regex",
-        "mokuro",
-        "mecab-python3",
-        "unidic-lite",
-    ],
+    install_requires=["regex", "mokuro", "mecab-python3", "unidic-lite", "pypdf"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
