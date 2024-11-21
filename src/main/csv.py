@@ -38,7 +38,8 @@ def add_english_to_vocab(vocab_file: Path, delay: float = 1.0):
         ):
             definition = definition.lookup_definition(row[0])
             row.append(definition)
-            updated_rows.append(row)
+            if definition != "":
+                updated_rows.append(row)
 
     with open(vocab_file, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
