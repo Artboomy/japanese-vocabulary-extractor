@@ -1,4 +1,4 @@
-# Manga Wordlist Extractor
+# Japanese Vocabulary Extractor
 
 This script allows you to automatically scan through various types of japanese media (currently manga and ebooks) and generate a csv with all contained words.
 
