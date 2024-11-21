@@ -13,21 +13,8 @@ You need to have python installed (ideally Python 3.12).
 
 Install the package using
 ```
-pip install manga-wordlist-extractor
+pip install japanese-vocabulary-extractor
 ```
-
-## Using the source code directly
-
-Download this repository (using the "code -> download zip" option above the files list at the top). Open a command prompt in the downloaded folder after extracting. 
-
-Run this to install all dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-You can now run the tool from the src/main/main.py file.
-
 
 # Usage
 
