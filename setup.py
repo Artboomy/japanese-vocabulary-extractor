@@ -34,7 +34,7 @@ setup(
     python_requires=">=3.7",
     entry_points={
         "console_scripts": [
-            "japanese-vocabulary-extractor=main.main:main",
+            "jpvocab-extractor=main.main:main",
         ],
     },
 )
