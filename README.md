@@ -41,6 +41,8 @@ If you enter a parent folder containing multiple volumes, add "--parent" before 
 
 This will generate a vocab.csv file containing all words.
 
+Bonus: Since this script is using mokuro, you'll also generate a .mokuro and .csv file for each volume, allowing you to read the manga with selectable text in your browser. For more info, visit the mokuro github page linked at the bottom.
+
 
 # Notices
 
@@ -54,6 +56,8 @@ Also important: This script is not perfect. The text recognition can make mistak
 * Live Output from Mokuro (it can take very long)
 * Separate outputs for each volume
 * Added translations through dictionary lookup?
+* Support other input formats
+* Support other output formats
 
 
 # Acknowledgements
