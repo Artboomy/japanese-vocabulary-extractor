@@ -46,7 +46,7 @@ def texts_from_manga(provided_path: Path, is_parent: bool) -> list:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
         return
-    texts.extend(ocr.text_from_folder(provided_path, user_args.parent))
+    texts.extend(ocr.text_from_folder(provided_path, is_parent))
 
     output_file = get_output_file_path(provided_path, "manga", is_parent)
 
@@ -59,9 +59,6 @@ def texts_from_pdf(provided_path: Path) -> list:
     pdfs = get_files(provided_path, "pdf")
     for pdf_path in pdfs:
         texts.extend(pdf.text_from_pdf(pdf_path))
-
-    output_file = get_output_file_path(provided_path, "pdf")
-
     return texts
 
 
@@ -71,9 +68,6 @@ def texts_from_epub(provided_path: Path) -> list:
     epubs = get_files(provided_path, "epub")
     for epub_path in epubs:
         texts.extend(epub.texts_from_epub(epub_path))
-
-    output_file = get_output_file_path(provided_path, "epub")
-
     return texts
 
 
