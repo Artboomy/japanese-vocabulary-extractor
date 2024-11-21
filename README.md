@@ -1,8 +1,8 @@
 # Manga Wordlist Extractor
 
-This script allows you to automatically scan through manga and generate a csv with all contained words.
+This script allows you to automatically scan through various types of japanese media (currently manga and ebooks) and generate a csv with all contained words.
 
-It is intended to be used with the community deck feature of Bunpro, hence the csv format. Once the csv import feature will be published, I will adjust the format of the csv. If any other outputs are desired, let me know!
+It is intended to be used with the community deck feature of Bunpro, hence the csv output format. Once the csv import feature will be published, I will adjust the format of the csv. If any other outputs are desired, let me know!
 
 
 # Installation
@@ -32,12 +32,12 @@ You can now run the tool from the src/main/main.py file.
 # Usage
 
 ```
-manga-wordlist-extractor [-h] [--parent] folder
+main.py [-h] [--parent] --type TYPE input_path
 ```
 
-Replace folder with the path containing the manga files. Make sure to surround it with quotation marks if there are spaces in the path! 
+Specify the type of media: 'manga', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
 
-If you enter a parent folder containing multiple volumes, add "--parent" before the folder path.
+Only for manga: If you enter a parent folder containing multiple volumes in their own folders, add "--parent" before the folder path.
 
 This will generate a vocab.csv file containing all words.
 
@@ -56,7 +56,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 * Live Output from Mokuro (it can take very long)
 * Separate outputs for each volume
 * Added translations through dictionary lookup?
-* Support other input formats
+* Support more input formats (please suggest any you might want!)
 * Support other output formats
 
 
