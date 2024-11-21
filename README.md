@@ -16,7 +16,7 @@ pip install japanese-vocabulary-extractor
 # Usage
 
 ```
-main.py [-h] [--parent] [--add-english] --type TYPE input_path
+jpvocab-extractor [-h] [--parent] [--add-english] --type TYPE input_path
 ```
 
 Specify the type of media: 'manga', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
