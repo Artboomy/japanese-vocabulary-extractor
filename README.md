@@ -24,11 +24,11 @@ main.py [-h] [--parent] --type TYPE input_path
 
 Specify the type of media: 'manga', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
 
-Only for manga: If you enter a parent folder containing multiple volumes in their own folders, add "--parent" before the folder path.
+Only for manga: If you enter a parent folder containing multiple volumes in their own folders, add "--parent" before the type.
 
 This will generate a vocab.csv file containing all words.
 
-Bonus: Since this script is using mokuro, you'll also generate a .mokuro and .csv file for each volume, allowing you to read the manga with selectable text in your browser. For more info, visit the mokuro github page linked at the bottom.
+Bonus: Since this script is using mokuro, you'll also generate a .mokuro and .html file for each volume, allowing you to read the manga with selectable text in your browser. For more info, visit the mokuro github page linked at the bottom.
 
 
 # Notices
