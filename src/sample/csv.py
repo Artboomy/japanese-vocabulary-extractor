@@ -39,11 +39,11 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
             word = row[0]
             word_info = dictionary.get_word_info(word)
 
-            # I currently decided one-letter hiragana words are not worth it to keep in
+            # I currently decided one-letter kana words are not worth keeping in
             # because the definitions fetched for them are absolutely useless. This could
             # and should definitely be changed but I'm not really sure how to do it.
-            one_letter_hiragana = re.match(r"\p{Hiragana}", word)
-            if not word_info["is_real"] or (one_letter_hiragana and add_english):
+            one_letter_kana = re.match(r"^\p{Hiragana}$|^\p{Katakana}$", word)
+            if not word_info["is_real"] or (one_letter_kana and add_english):
                 logging.debug(f"Removing {word}")
                 continue
 
