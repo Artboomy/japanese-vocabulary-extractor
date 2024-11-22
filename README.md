@@ -5,7 +5,7 @@ This script allows you to automatically scan through various types of japanese m
 * Manga (as images)
 * Subtitles (ASS/SRT files) from anime, shows or movies
 * PDF and EPUB files
-* Text files
+* Text (txt) files
 
 It also allows you to automatically add the english definitions of each word to the CSV.
 
@@ -35,7 +35,7 @@ To use the Japanese Vocabulary Extractor, follow these steps:
     jpvocab-extractor --type TYPE input_path
     ```
 
-Replace `TYPE` with the type of media you are scanning: 'manga', 'subtitle', 'pdf', 'epub', or 'text'. 
+Replace `TYPE` with the type of media you are scanning: 'manga', 'subtitle', 'pdf', 'epub', 'txt' or 'generic'. 
 
 Replace `input_path`:
 - For manga, provide a folder containing the images.

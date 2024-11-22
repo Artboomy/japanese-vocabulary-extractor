@@ -19,24 +19,27 @@ def main():
     configure_logging()
     user_args = args.parse_arguments()
     provided_path = Path(user_args.input_path)
-    output_file = None
-    texts = []
-
     logging.info(f"Extracting texts from {provided_path}...")
-    match user_args.type:
-        case "manga":
-            texts = texts_from_manga(provided_path, user_args.parent)
-        case "pdf":
-            texts = texts_from_pdf(provided_path)
-        case "epub":
-            texts = texts_from_epub(provided_path)
-        case "text":
-            texts = texts_from_text_file(provided_path)
-        case "subtitle":
-            texts = texts_from_subtitle_file(provided_path)
-        case _:
-            logging.error("Invalid type provided.")
-            exit(1)
+
+    extractors = {
+        "manga": lambda: texts_from_manga(provided_path, user_args.parent),
+        "pdf": lambda: texts_from_generic_file(provided_path, "pdf", pdf.text_from_pdf),
+        "epub": lambda: texts_from_generic_file(
+            provided_path, "epub", epub.texts_from_epub
+        ),
+        "txt": lambda: texts_from_generic_file(provided_path, "txt", generic_extract),
+        "subtitle": lambda: texts_from_generic_file(
+            provided_path, "ass", generic_extract
+        )
+        + texts_from_generic_file(provided_path, "srt", generic_extract),
+        "generic": lambda: texts_from_generic_file(provided_path, "*", generic_extract),
+    }
+
+    try:
+        texts = extractors[user_args.type]()
+    except KeyError:
+        logging.error("Invalid type provided.")
+        exit(1)
 
     logging.debug(f"Texts: {texts[:50]}")
 
@@ -50,73 +53,48 @@ def main():
     if user_args.add_english:
         csv.add_english_to_vocab(output_file)
 
+    logging.info(f"Vocabulary saved to {output_file}")
 
-def texts_from_manga(provided_path: Path, is_parent: bool) -> list:
-    texts = []
+
+def texts_from_manga(provided_path: Path, is_parent: bool) -> list[str]:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
-        return
-    texts.extend(ocr.text_from_folder(provided_path, is_parent))
-    return texts
+        exit(1)
+
+    return ocr.text_from_folder(provided_path, is_parent)
 
 
-def texts_from_pdf(provided_path: Path) -> list:
+def texts_from_generic_file(provided_path: Path, ext: str, extract_func) -> list[str]:
     texts = []
-    pdfs = get_files(provided_path, "pdf")
-    for pdf_path in pdfs:
-        texts.extend(pdf.text_from_pdf(pdf_path))
-    return texts
-
-
-def texts_from_epub(provided_path: Path) -> list:
-    texts = []
-    epubs = get_files(provided_path, "epub")
-    for epub_path in epubs:
-        texts.extend(epub.texts_from_epub(epub_path))
-    return texts
-
-
-def texts_from_text_file(provided_path: Path) -> list:
-    files = get_files(provided_path, "txt")
-    texts = []
+    files = get_files(provided_path, f"{ext}")
     for file in files:
-        texts.extend(file.read_text().split())
+        texts.extend(extract_func(file))
     return texts
 
 
-def texts_from_subtitle_file(provided_path: Path) -> list:
-    files = get_files(provided_path, "ass")
-    files.extend(get_files(provided_path, "srt"))
-    texts = []
-    for file in files:
-        lines = file.read_text().splitlines()
-        texts.extend(lines)
-
-    return texts
+def generic_extract(provided_path) -> list[str]:
+    return provided_path.read_text().split()
 
 
 def get_files(provided_path: Path, extension: str) -> list[Path]:
-    files = []
     if provided_path.is_dir():
-        files = list(provided_path.rglob(f"*.{extension}", case_sensitive=False))
+        files = list(provided_path.rglob(f"*.{extension}"))
     elif provided_path.is_file():
         files = [provided_path]
     else:
         logging.error("Provided path is not a file or directory.")
         exit(1)
-    return files
+    return [file for file in files if file.is_file()]
 
 
-def get_output_file_path(
-    provided_path: Path, type: str, is_parent: bool = False
-) -> Path:
-    if type == "manga":
+def get_output_file_path(provided_path: Path, is_manga: bool, is_parent: bool) -> Path:
+    if is_manga:
         return (
-            provided_path.parent / "vocab.csv"
-            if provided_path.is_file()
-            else provided_path / "vocab.csv"
+            provided_path / "vocab.csv"
+            if is_parent
+            else provided_path.parent / "vocab.csv"
         )
-    else:  # pdf or epub
+    else:
         return (
             provided_path.parent / "vocab.csv"
             if provided_path.is_file()

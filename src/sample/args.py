@@ -23,7 +23,7 @@ def parse_arguments():
         "--type",
         type=str,
         required=True,
-        help="Type of input. Can be 'manga', 'subtitle', 'pdf', 'epub' or 'text'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files.",
+        help="Type of input. Can be 'manga', 'subtitle', 'pdf', 'epub', 'txt' or 'generic'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files. Generic just scans through any files it finds (or the file provided) and tries to extract words from them.",
     )
     parser.add_argument(
         "input_path",
