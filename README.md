@@ -13,26 +13,46 @@ The resulting CSV can be imported to Anki (if you add the english definitions) o
 
 # Installation
 
-You need to have python installed (ideally Python 3.12).
+You need to have Python installed on your computer. I recommend using Python 3.12.
 
-Install the package using
-```
-pip install japanese-vocabulary-extractor
-```
+To install the Japanese Vocabulary Extractor, follow these steps:
+
+1. Open a terminal or command prompt on your computer.
+2. Type the following command and press Enter:
+    ```
+    pip install japanese-vocabulary-extractor
+    ```
+
+This will download and install the necessary files for the tool to work.
 
 # Usage
 
+To use the Japanese Vocabulary Extractor, follow these steps:
+
+1. Open a terminal or command prompt on your computer.
+2. Type the following command and press Enter:
+    ```
+    jpvocab-extractor --type TYPE input_path
+    ```
+
+Replace `TYPE` with the type of media you are scanning: 'manga', 'subtitle', 'pdf', 'epub', or 'text'. 
+
+- For manga, provide a folder containing the images.
+- For other types, provide the file or a folder with multiple files. Use quotation marks if the path has spaces.
+
+This will create a `vocab.csv` file with all the words found.
+
+To add English definitions to the CSV, include the `--add-english` option:
 ```
-jpvocab-extractor [-h] [--parent] [--add-english] --type TYPE input_path
+jpvocab-extractor --add-english --type TYPE input_path
 ```
 
-Specify the type of media: 'manga', 'subtitle', 'pdf', 'epub' or 'text'. If scanning a manga manga, you must provide a folder as input_path. Otherwise enter the file or a folder of multiple files. Make sure to surround it with quotation marks if there are spaces in the path! 
+For manga only: If you have a parent folder with multiple volumes in separate folders, add `--parent` before the type:
+```
+jpvocab-extractor --parent --type manga input_path
+```
 
-This will generate a vocab.csv file containing all words. If you wish to add definitions in the secon column of the CSV, add the "--add-english" argument.
-
-Only for manga: If you enter a parent folder containing multiple volumes in their own folders, add "--parent" before the type.
-
-Bonus: Since this script is using mokuro, you'll also generate a .mokuro and .html file for each volume, allowing you to read the manga with selectable text in your browser. For more info, visit the mokuro github page linked at the bottom.
+Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 
 
 # Notices
