@@ -7,7 +7,7 @@ This script allows you to automatically scan through various types of japanese m
 * PDF and EPUB files
 * Text files
 
-It also allows you to automatically add the english definitions to the CSV.
+It also allows you to automatically add the english definitions of each word to the CSV.
 
 The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro.
 
