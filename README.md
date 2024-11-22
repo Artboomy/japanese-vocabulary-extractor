@@ -65,6 +65,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
+* Option to add furigana to words
 * Separate outputs for each volume
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs?) Please suggest any you might want!
