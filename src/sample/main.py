@@ -22,6 +22,7 @@ def main():
     output_file = None
     texts = []
 
+    logging.info(f"Extracting texts from {provided_path}...")
     match user_args.type:
         case "manga":
             texts = texts_from_manga(provided_path, user_args.parent)
@@ -41,6 +42,7 @@ def main():
 
     output_file = get_output_file_path(provided_path, user_args.type, user_args.parent)
 
+    logging.info(f"Getting vocabulary items from texts...")
     vocab = tokenizer.vocab_from_texts(texts)
     logging.info(f"Vocabulary: {vocab}")
     csv.save_vocab_to_csv(vocab, output_file)
