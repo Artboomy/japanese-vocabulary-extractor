@@ -23,6 +23,7 @@ def vocab_from_texts(texts: list) -> set:
             word_info = word.split("\t")
             if word == "EOS" or word == "" or len(word_info) < 4:
                 continue
+            # The 1st element contains the word itself, while the 4th element contains the base form
             # For some reason the 4th element contains the english translation
             # for katakana-only words, so we differentiate between katakana-only
             # words and other words
@@ -31,7 +32,7 @@ def vocab_from_texts(texts: list) -> set:
                 if katakana_only_pattern.match(word_info[0])
                 else word_info[3]
             )
-            # Sometimes the base form is followed by a hyphen and more text
+            # Sometimes the base form is followed by a hyphen and more text about word type
             base_form = base_form.split("-")[0]
             if confirm_japanese_pattern.match(base_form):
                 vocab.add(base_form)

@@ -36,9 +36,9 @@ def add_english_to_vocab(vocab_file: Path, delay: float = 1.0):
             desc="Loading definitions, this may take a while",
             total=line_count - 1,
         ):
-            definition = definition.lookup_definition(row[0])
-            row.append(definition)
-            if definition != "":
+            word_definition = definition.lookup_definition(row[0])
+            row.append(word_definition)
+            if word_definition != "":
                 updated_rows.append(row)
 
     with open(vocab_file, "w", newline="", encoding="utf-8") as file:
