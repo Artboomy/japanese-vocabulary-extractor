@@ -4,6 +4,7 @@
 # Standard library imports
 from pathlib import Path
 import logging
+import colorlog
 
 # Local application imports
 from main import ocr
@@ -15,9 +16,7 @@ from main import epub
 
 
 def main():
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+    configure_logging()
     user_args = args.parse_arguments()
     provided_path = Path(user_args.input_path)
     output_file = None
@@ -108,6 +107,17 @@ def get_output_file_path(
             if provided_path.is_file()
             else provided_path / "vocab.csv"
         )
+
+
+def configure_logging() -> None:
+    handler = colorlog.StreamHandler()
+    handler.setFormatter(
+        colorlog.ColoredFormatter(
+            "%(log_color)s%(asctime)s%(reset)s | \033[1m%(log_color)s%(levelname)s%(reset)s\033[0m | %(log_color)s%(name)s%(reset)s - \033[1m%(message)s\033[0m"
+        )
+    )
+    logging.getLogger().addHandler(handler)
+    logging.getLogger().setLevel(logging.INFO)
 
 
 if __name__ == "__main__":

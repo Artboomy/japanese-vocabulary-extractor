@@ -3,9 +3,11 @@
 
 # Standard Library Imports
 import csv
-
+import logging
 from pathlib import Path
 from tqdm import tqdm
+
+# Local imports
 from main import definition
 
 
@@ -19,6 +21,7 @@ def save_vocab_to_csv(vocab: set, output_file: Path):
 
 def add_english_to_vocab(vocab_file: Path, delay: float = 1.0):
     # First, count the number of lines in the file
+    logging.info(f"Adding English definitions to {vocab_file}")
     with open(vocab_file, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
         line_count = sum(1 for row in reader)
@@ -33,7 +36,7 @@ def add_english_to_vocab(vocab_file: Path, delay: float = 1.0):
 
         for row in tqdm(
             reader,
-            desc="Loading definitions, this may take a while",
+            desc="Loading definitions:",
             total=line_count - 1,
         ):
             word_definition = definition.lookup_definition(row[0])

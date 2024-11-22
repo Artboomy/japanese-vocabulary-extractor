@@ -22,6 +22,7 @@ setup(
         "tqdm",
         "jamdict",
         "jamdict-data",
+        "colorlog",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

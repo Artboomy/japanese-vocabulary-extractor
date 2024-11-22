@@ -2,6 +2,7 @@ certifi==2024.8.30
 cffi==1.17.1
 charset-normalizer==3.4.0
 chirptext==0.1.2
+colorlog==6.9.0
 cryptography==43.0.3
 Cython==3.0.11
 docutils==0.21.2
