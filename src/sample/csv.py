@@ -8,7 +8,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 # Local imports
-from main import definition
+from . import definition
 
 
 def save_vocab_to_csv(vocab: set, output_file: Path):

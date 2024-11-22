@@ -7,12 +7,12 @@ import logging
 import colorlog
 
 # Local application imports
-from main import ocr
-from main import tokenizer
-from main import csv
-from main import args
-from main import pdf
-from main import epub
+from . import ocr
+from . import tokenizer
+from . import csv
+from . import args
+from . import pdf
+from . import epub
 
 
 def main():
