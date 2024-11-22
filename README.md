@@ -72,7 +72,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs?) Please suggest any you might want!
 * Support other output formats
-* Improve dictionary result accuracy to include one-letter-kana words when translating to english (currently filtered out due to mostly useless answers)
+* Improve dictionary result accuracy to include one-character-kana words when translating to english (currently filtered out due to mostly useless answers)
 
 
 # Acknowledgements
