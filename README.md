@@ -37,6 +37,7 @@ To use the Japanese Vocabulary Extractor, follow these steps:
 
 Replace `TYPE` with the type of media you are scanning: 'manga', 'subtitle', 'pdf', 'epub', or 'text'. 
 
+Replace `input_path`:
 - For manga, provide a folder containing the images.
 - For other types, provide the file or a folder with multiple files. Use quotation marks if the path has spaces.
 
