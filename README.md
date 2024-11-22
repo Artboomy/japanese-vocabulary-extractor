@@ -72,6 +72,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs?) Please suggest any you might want!
 * Support other output formats
+* Improve dictionary result accuracy to allow one-letter-hiragana words when translating to english (currently filtered out due to useless answers, like ない -> earthquake)
 
 
 # Acknowledgements
