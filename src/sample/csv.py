@@ -43,7 +43,7 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
             # because the definitions fetched for them are absolutely useless. This could
             # and should definitely be changed but I'm not really sure how to do it.
             one_letter_hiragana = re.match(r"\p{Hiragana}", word)
-            if not word_info["is_real"] or one_letter_hiragana:
+            if not word_info["is_real"] or (one_letter_hiragana and add_english):
                 logging.debug(f"Removing {word}")
                 continue
 
