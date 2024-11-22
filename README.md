@@ -26,7 +26,7 @@ pip install japanese-vocabulary-extractor
 jpvocab-extractor [-h] [--parent] [--add-english] --type TYPE input_path
 ```
 
-Specify the type of media: 'manga', 'subtitle', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
+Specify the type of media: 'manga', 'subtitle', 'pdf', 'epub' or 'text'. If scanning a manga manga, you must provide a folder as input_path. Otherwise enter the file or a folder of multiple files. Make sure to surround it with quotation marks if there are spaces in the path! 
 
 This will generate a vocab.csv file containing all words. If you wish to add definitions in the secon column of the CSV, add the "--add-english" argument.
 

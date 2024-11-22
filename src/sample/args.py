@@ -7,7 +7,7 @@ def parse_arguments():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="This script allows you to extract a vocabulary list from a folder of manga images."
+        description="This script allows you to extract a vocabulary list with or without english definitions from various types of japanese media."
     )
     parser.add_argument(
         "--parent",
@@ -23,7 +23,7 @@ def parse_arguments():
         "--type",
         type=str,
         required=True,
-        help="Type of input. Can be 'manga', 'pdf', 'epub' or 'text'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files.",
+        help="Type of input. Can be 'manga', 'subtitle', 'pdf', 'epub' or 'text'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files.",
     )
     parser.add_argument(
         "input_path",
