@@ -9,7 +9,7 @@ from pathlib import Path
 import regex as re
 
 
-def text_from_folder(path: str, is_parent: bool) -> str:
+def text_from_manga_folder(path: str, is_parent: bool) -> str:
     run_mokuro(path, is_parent)
     return get_lines_from_mokuro_output(path, is_parent)
 

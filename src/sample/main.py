@@ -61,7 +61,7 @@ def texts_from_manga(provided_path: Path, is_parent: bool) -> list[str]:
         logging.error("Provided path is not a directory.")
         exit(1)
 
-    return ocr.text_from_folder(provided_path, is_parent)
+    return ocr.text_from_manga_folder(provided_path, is_parent)
 
 
 def texts_from_generic_file(provided_path: Path, ext: str, extract_func) -> list[str]:
