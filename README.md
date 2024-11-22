@@ -48,6 +48,8 @@ To add English definitions to the CSV, include the `--add-english` option:
 jpvocab-extractor --add-english --type TYPE input_path
 ```
 
+If you wish to add furigana (in the current implementation just the reading of the whole word in hiragana) to the word, add the `--furigana` option, just like the `--add-english` option. They can also be combined.
+
 For manga only: If you have a parent folder with multiple volumes in separate folders, add `--parent` before the type:
 ```
 jpvocab-extractor --parent --type manga input_path
@@ -65,7 +67,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
-* Option to add furigana to words
+* Better furigana
 * Separate outputs for each volume
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs?) Please suggest any you might want!

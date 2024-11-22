@@ -20,6 +20,11 @@ def parse_arguments():
         help="Looks up and adds the English translation of each word to the CSV file.",
     )
     parser.add_argument(
+        "--furigana",
+        action="store_true",
+        help="Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.",
+    )
+    parser.add_argument(
         "--type",
         type=str,
         required=True,

@@ -53,6 +53,9 @@ def main():
     if user_args.add_english:
         csv.add_english_to_vocab(output_file)
 
+    if user_args.furigana:
+        csv.add_furigana(output_file)
+
     logging.info(f"Vocabulary saved to {output_file}")
 
 
@@ -87,8 +90,8 @@ def get_files(provided_path: Path, extension: str) -> list[Path]:
     return [file for file in files if file.is_file()]
 
 
-def get_output_file_path(provided_path: Path, is_manga: bool, is_parent: bool) -> Path:
-    if is_manga:
+def get_output_file_path(provided_path: Path, type: str, is_parent: bool) -> Path:
+    if type == "manga":
         return (
             provided_path / "vocab.csv"
             if is_parent
