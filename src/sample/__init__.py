@@ -5,10 +5,11 @@
 from .ocr import text_from_folder
 from .tokenizer import vocab_from_texts
 from .main import main
-from .csv import save_vocab_to_csv, add_english_to_vocab
+from .csv import save_vocab_to_csv, process_vocab_file
 from .pdf import text_from_pdf
 from .epub import texts_from_epub
-from .definition import lookup_definition
+from .args import parse_arguments
+from .dictionary import get_word_info
 
 # Define what is available when the package is imported
 __all__ = [
@@ -16,8 +17,9 @@ __all__ = [
     "vocab_from_texts",
     "main",
     "save_vocab_to_csv",
-    "add_english_to_vocab",
+    "process_vocab_file",
     "text_from_pdf",
     "texts_from_epub",
+    "parse_args",
     "lookup_definition",
 ]

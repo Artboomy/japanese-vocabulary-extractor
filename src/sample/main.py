@@ -47,14 +47,11 @@ def main():
 
     logging.info(f"Getting vocabulary items from texts...")
     vocab = tokenizer.vocab_from_texts(texts)
-    logging.info(f"Vocabulary: {vocab}")
+    logging.info(f"Vocabulary: {", ".join(list(vocab)[:50])}, ...")
     csv.save_vocab_to_csv(vocab, output_file)
 
-    if user_args.add_english:
-        csv.add_english_to_vocab(output_file)
-
-    if user_args.furigana:
-        csv.add_furigana(output_file)
+    logging.info(f"Processing CSV using dictionary:")
+    csv.process_vocab_file(output_file, user_args.add_english, user_args.furigana)
 
     logging.info(f"Vocabulary saved to {output_file}")
 

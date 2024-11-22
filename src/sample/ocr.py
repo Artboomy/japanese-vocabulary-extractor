@@ -35,17 +35,23 @@ def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list:
     json_files = ocr_result_path.rglob("*.json")
     all_lines = []
     for json_file in json_files:
-        with open(json_file, "r", encoding="utf-8") as file:
-            data = json.load(file)
-            for block in data.get("blocks", []):
-                lines = block.get("lines", [])
-                for line in lines:
-                    # Sometimes the OCR hallucinates text where it shouldn't
-                    # be and this results in very long strings of consecutive
-                    # Kanji. This filters out most of these cases.
-                    if max_consecutive_kanji(line) <= 10:
-                        all_lines.append(line)
+        all_lines.extend(process_json_file(json_file))
+    return all_lines
 
+
+def process_json_file(json_file: Path) -> list:
+    with open(json_file, "r", encoding="utf-8") as file:
+        data = json.load(file)
+        return extract_lines_from_data(data)
+
+
+def extract_lines_from_data(data: dict) -> list:
+    all_lines = []
+    for block in data.get("blocks", []):
+        lines = block.get("lines", [])
+        for line in lines:
+            if max_consecutive_kanji(line) <= 10:
+                all_lines.append(line)
     return all_lines
 
 
