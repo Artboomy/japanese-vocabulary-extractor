@@ -9,7 +9,7 @@ This script allows you to automatically scan through various types of japanese m
 
 It also allows you to automatically add the english definitions of each word to the CSV.
 
-The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro.
+The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro. If you wish to add furigana to your anki deck, use this addon: https://ankiweb.net/shared/info/678316993
 
 # Installation
 
