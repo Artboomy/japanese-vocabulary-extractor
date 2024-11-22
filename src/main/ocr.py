@@ -6,6 +6,7 @@ import subprocess
 import json
 import logging
 from pathlib import Path
+import regex as re
 
 
 def text_from_folder(path: str, is_parent: bool) -> str:
@@ -38,5 +39,28 @@ def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list:
             data = json.load(file)
             for block in data.get("blocks", []):
                 lines = block.get("lines", [])
-                all_lines.extend(lines)
+                for line in lines:
+                    # Sometimes the OCR hallucinates text where it shouldn't
+                    # be and this results in very long strings of consecutive
+                    # Kanji. This filters out most of these cases.
+                    if max_consecutive_kanji(line) <= 10:
+                        all_lines.append(line)
+
     return all_lines
+
+
+def max_consecutive_kanji(s: str) -> int:
+    # Regular expression to match Kanji characters
+    kanji_regex = re.compile(r"\p{Han}")
+
+    max_count = 0
+    current_count = 0
+
+    for char in s:
+        if kanji_regex.match(char):
+            current_count += 1
+            max_count = max(max_count, current_count)
+        else:
+            current_count = 0
+
+    return max_count

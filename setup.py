@@ -20,6 +20,8 @@ setup(
         "pypdf",
         "ebooklib",
         "tqdm",
+        "jamdict",
+        "jamdict-data",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
