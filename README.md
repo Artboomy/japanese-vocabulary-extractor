@@ -1,14 +1,15 @@
 # Japanese Vocabulary Extractor
 
 This script allows you to automatically scan through various types of japanese media and generate a csv with all contained words for studying. Currently supported formats are: 
-* manga (as images)
-* subtitles (ass/srt files) from anime, shows or movies
-* pdf and epub files
-* text files
+
+* Manga (as images)
+* Subtitles (ASS/SRT files) from anime, shows or movies
+* PDF and EPUB files
+* Text files
 
 It also allows you to automatically add the english definitions to the CSV.
 
-The resulting csv can be imported to Anki (if you add the english definitions) or Bunpro.
+The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro.
 
 # Installation
 
