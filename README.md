@@ -1,6 +1,6 @@
 # Japanese Vocabulary Extractor
 
-This script allows you to automatically scan through various types of japanese media (currently manga and ebooks) and generate a csv with all contained words. It also allows you to automatically add the english definitions to the CSV.
+This script allows you to automatically scan through various types of japanese media (currently manga, pdf, epub and text files) and generate a csv with all contained words. It also allows you to automatically add the english definitions to the CSV.
 
 The resulting csv can be imported to Anki (if you add the english definitions) or Bunpro.
 
