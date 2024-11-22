@@ -31,6 +31,8 @@ def main():
             texts = texts_from_epub(provided_path)
         case "text":
             texts = texts_from_text_file(provided_path)
+        case "subtitle":
+            texts = texts_from_subtitle_file(provided_path)
         case _:
             logging.error("Invalid type provided.")
             exit(1)
@@ -80,10 +82,21 @@ def texts_from_text_file(provided_path: Path) -> list:
     return texts
 
 
-def get_files(provided_path: Path, extension: str) -> list:
+def texts_from_subtitle_file(provided_path: Path) -> list:
+    files = get_files(provided_path, "ass")
+    files.extend(get_files(provided_path, "srt"))
+    texts = []
+    for file in files:
+        lines = file.read_text().splitlines()
+        texts.extend(lines)
+
+    return texts
+
+
+def get_files(provided_path: Path, extension: str) -> list[Path]:
     files = []
     if provided_path.is_dir():
-        files = provided_path.rglob(f"*.{extension}", case_sensitive=False)
+        files = list(provided_path.rglob(f"*.{extension}", case_sensitive=False))
     elif provided_path.is_file():
         files = [provided_path]
     else:
