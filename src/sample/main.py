@@ -36,7 +36,7 @@ def main():
     }
 
     try:
-        texts = extractors[user_args.type]()
+        texts = extractors[user_args.type.lower()]()
     except KeyError:
         logging.error("Invalid type provided.")
         exit(1)
