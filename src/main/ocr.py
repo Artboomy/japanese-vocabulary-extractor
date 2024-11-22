@@ -22,12 +22,8 @@ def run_mokuro(path: Path, is_parent: bool) -> None:
             command.append(path.as_posix())
         logging.info(f"Running mokuro with command: {command}")
         logging.info("This may take a while...")
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
-        logging.info("Mokuro finished running. Output:")
-        logging.info(result.stdout)
-        if result.stderr:
-            logging.error("Mokuro errors:")
-            logging.error(result.stderr)
+        subprocess.run(command, text=True, check=True)
+        logging.info("Mokuro finished running")
     except subprocess.CalledProcessError as e:
         logging.error("Mokuro failed to run.")
 

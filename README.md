@@ -37,8 +37,8 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
-* Live Output from Mokuro (it can take very long)
 * Separate outputs for each volume
+* Offline dictionary
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs?) Please suggest any you might want!
 * Support other output formats
