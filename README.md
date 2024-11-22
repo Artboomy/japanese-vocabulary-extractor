@@ -43,6 +43,8 @@ Replace `input_path`:
 
 This will create a `vocab.csv` file with all the words found.
 
+## Options
+
 To add English definitions to the CSV, include the `--add-english` option:
 ```
 jpvocab-extractor --add-english --type TYPE input_path
