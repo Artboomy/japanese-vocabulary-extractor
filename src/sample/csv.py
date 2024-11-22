@@ -27,7 +27,7 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
     with open(vocab_file, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
         headers = next(reader)
-        if add_english and "definition" not in headers:
+        if add_english:
             headers.append("definition")
         updated_rows.append(headers)
 
@@ -37,10 +37,13 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
             total=line_count - 1,
         ):
             word = row[0]
-
-            # Get word information
             word_info = dictionary.get_word_info(word)
-            if not word_info["is_real"]:
+
+            # I currently decided one-letter hiragana words are not worth it to keep in
+            # because the definitions fetched for them are absolutely useless. This could
+            # and should definitely be changed but I'm not really sure how to do it.
+            one_letter_hiragana = re.match(r"\p{Hiragana}", word)
+            if not word_info["is_real"] or one_letter_hiragana:
                 logging.debug(f"Removing {word}")
                 continue
 
@@ -49,7 +52,7 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
                 row.append(word_info["definition"])
 
             # Add furigana
-            if add_furigana and contains_kanji(word):
+            if add_furigana and re.search(r"\p{Han}", word):
                 row[0] = f"{word} ({word_info['kana']})"
 
             updated_rows.append(row)
@@ -64,7 +67,3 @@ def count_lines(vocab_file: Path):
         reader = csv.reader(file)
         line_count = sum(1 for row in reader)
     return line_count
-
-
-def contains_kanji(s: str) -> bool:
-    return bool(re.search(r"\p{Han}", s))
