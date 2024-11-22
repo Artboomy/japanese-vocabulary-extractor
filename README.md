@@ -1,6 +1,6 @@
 # Japanese Vocabulary Extractor
 
-This script allows you to automatically scan through various types of japanese media (currently manga, pdf, epub and text files) and generate a csv with all contained words. It also allows you to automatically add the english definitions to the CSV.
+This script allows you to automatically scan through various types of japanese media and generate a csv with all contained words. Currently supported formats are manga (as images), subtitles from anime, shows or movies, pdf, epub and text files. It also allows you to automatically add the english definitions to the CSV.
 
 The resulting csv can be imported to Anki (if you add the english definitions) or Bunpro.
 
@@ -19,7 +19,7 @@ pip install japanese-vocabulary-extractor
 jpvocab-extractor [-h] [--parent] [--add-english] --type TYPE input_path
 ```
 
-Specify the type of media: 'manga', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
+Specify the type of media: 'manga', 'subtitle', 'pdf', 'epub' or 'text'. Replace input_path with the path containing the files (or, if not a manga, the file directly). Make sure to surround it with quotation marks if there are spaces in the path! 
 
 This will generate a vocab.csv file containing all words. If you wish to add definitions in the secon column of the CSV, add the "--add-english" argument.
 
@@ -32,7 +32,7 @@ Bonus: Since this script is using mokuro, you'll also generate a .mokuro and .ht
 
 If you run into errors, look into the mokuro repository linked at the bottom. There might be some issues with python version compatibility.
 
-Also important: This script is not perfect. The text recognition can make mistakes and some of the extracted vocab can be wrong. If this proves to be a big issue I will look for a different method to parse vocabulary from the text.
+Also important: This script is not perfect. The text recognition can make mistakes and some of the extracted vocab can be wrong. If this proves to be a big issue I will look for a different method to parse vocabulary from the text. Do not be alarmed by the warning about words with no definition, these are likely names, hallucinations/mistakes by the OCR algorithm or chinese symbols (sometimes found in subtitles).
 
 
 # TODO
