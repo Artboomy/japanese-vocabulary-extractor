@@ -75,7 +75,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 * Better furigana
 * Separate outputs for each volume
 * More advanced dictionary lookup functionality
-* Support more input formats (Games, VNs?) Please suggest any you might want!
+* Support more input formats (Games, VNs, Audio files?) Please suggest any you might want, even the ones listed already!
 * Support other output formats
 * Improve dictionary result accuracy to include one-character-kana words when translating to english (currently filtered out due to mostly useless answers)
 
