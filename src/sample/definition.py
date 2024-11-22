@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Standard Library Imports
-import requests
 import logging
 from jamdict import Jamdict
 
