@@ -50,10 +50,7 @@ jpvocab-extractor --add-english --type TYPE input_path
 
 If you wish to add furigana (in the current implementation just the reading of the whole word in hiragana) to the word, add the `--furigana` option, just like the `--add-english` option. They can also be combined.
 
-For manga only: If you have a parent folder with multiple volumes in separate folders, add `--parent` before the type:
-```
-jpvocab-extractor --parent --type manga input_path
-```
+For manga only: If you have a parent folder with multiple volumes in separate folders, the `--parent` option.
 
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 
