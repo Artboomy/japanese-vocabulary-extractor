@@ -70,7 +70,13 @@ jpvocab-extractor [-h] [--parent] [--add-english] [--furigana] --type TYPE input
 
 ## Bunpro
 
-The setup you'd want for Bunpro isn't known yet, but I'll put the expected 
+The setup you'd want for Bunpro isn't known yet, but I'll put the expected command that should work best for manga here:
+
+```
+jpvocab-extractor --parent --separate-vol --combine-vol --id --type manga input_path
+```
+
+This would combine all volumes with their own section into one CSV file, with JMDict IDs for each word.
 
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 

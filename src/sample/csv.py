@@ -77,12 +77,26 @@ def combine_csvs(csv_files: list[Path]):
         header = next(reader)
         new_rows.append(header)
 
+    # Sort csv files by file name
+    csv_files.sort(key=lambda x: x.stem)
+
     # Add chapters
     for csv_file in csv_files:
         with open(csv_file, "r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
             new_rows.append(["#" + csv_file.stem])
             new_rows.extend(list(reader)[1:])
+
+    # Remove all duplicates while preserving order
+    known_words = set()
+    i = 0
+    while i < len(new_rows):
+        if new_rows[i][0] in known_words:
+            new_rows.pop(i)
+            i -= 1
+        else:
+            known_words.add(new_rows[i][0])
+        i += 1
 
     with open(
         csv_files[0].parent / "vocab_combined.csv", "w", newline="", encoding="utf-8"
