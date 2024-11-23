@@ -78,6 +78,14 @@ jpvocab-extractor --parent --separate-vol --combine-vol --id --type manga input_
 
 This would combine all volumes with their own section into one CSV file, with JMDict IDs for each word.
 
+For general creation of decks for media other than manga, you would only add the `--id` flag:
+
+```
+jpvocab-extractor --id --type TYPE input_path
+```
+
+## Mokuro files
+
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 
 
