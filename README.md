@@ -52,14 +52,14 @@ jpvocab-extractor --add-english --type TYPE input_path
 ```
 
 Here is a list of all options:
-* --add-english: Looks up and adds the English translation of each word to the CSV file.
-* --furigana: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
-* --id: Replaces each word with its JMDict ID in the CSV file. Incompatible with the --furigana flag.
+* `--add-english`: Looks up and adds the English translation of each word to the CSV file.
+* `--furigana`: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
+* `--id`: Replaces each word with its JMDict ID in the CSV file. Incompatible with the `--furigana` flag.
 
 Here are some manga specific options for handling multiple volumes:
-* --parent: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
-* --separate-vol: Only relevant if processing a manga: each volume will be saved to a separate CSV file.
-* --combine-vol: Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.
+* `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
+* `--separate-vol`: Only relevant if processing a manga: each volume will be saved to a separate CSV file.
+* `--combine-vol`: Only relevant if processing a manga and using the `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.
 
 
 Here are all the available options shown together:
