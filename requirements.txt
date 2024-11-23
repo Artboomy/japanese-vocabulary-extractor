@@ -17,7 +17,7 @@ idna==3.10
 importlib_metadata==8.5.0
 jaconv==0.4.0
 jamdict==0.1a11.post2
-jamdict_data==1.5
+jamdict_data_fix==1.5.1a2
 jaraco.classes==3.4.0
 jaraco.context==6.0.1
 jaraco.functools==4.1.0

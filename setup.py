@@ -21,7 +21,7 @@ setup(
         "ebooklib",
         "tqdm",
         "jamdict",
-        "jamdict-data",
+        "jamdict-data-fix",
         "colorlog",
     ],
     classifiers=[
