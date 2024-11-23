@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="japanese-vocabulary-extractor",
-    version="0.7.0",
+    version="1.0.0",
     description="A utility to extract vocabulary lists from manga.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
