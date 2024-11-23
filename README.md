@@ -41,7 +41,7 @@ Replace `input_path`:
 - For manga, provide a folder containing the images.
 - For other types, provide the file or a folder with multiple files. Use quotation marks if the path has spaces.
 
-This will create a `vocab.csv` file with all the words found.
+This will create a `vocab_all.csv` file with all the words found.
 
 ## Options
 
