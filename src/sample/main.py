@@ -62,7 +62,7 @@ def main():
     for file, name in zip(texts_from_files, file_names):
         logging.info(f"Getting vocabulary items from {name}...")
         vocab = tokenizer.vocab_from_texts(file)
-        logging.info(f"Vocabulary from {name}: {", ".join(list(vocab)[:10])}, ...")
+        logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:10])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
         csv.save_vocab_to_csv(vocab, output_file)
         csvs.append(output_file)
@@ -77,7 +77,7 @@ def main():
         logging.info("Combining volumes into a single CSV file...")
         csv.combine_csvs(csvs)
 
-    logging.info(f"Vocabulary saved into: {", ".join([csv.stem for csv in csvs])}")
+    logging.info(f"Vocabulary saved into: {', '.join([csv.stem for csv in csvs])}")
 
 
 def check_invalid_options(user_args):
