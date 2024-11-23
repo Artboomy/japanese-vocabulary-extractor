@@ -51,10 +51,10 @@ def main():
         chapters = texts[0]
         names = texts[1]
         for chapter, name in zip(chapters, names):
-            logging.info(f"Getting vocabulary items from chatper {name}...")
+            logging.info(f"Getting vocabulary items from chapter {name}...")
             vocab = tokenizer.vocab_from_texts(chapter)
             logging.info(
-                f"Vocabulary from chatper {name}: {", ".join(list(vocab)[:10])}, ..."
+                f"Vocabulary from chapter {name}: {", ".join(list(vocab)[:10])}, ..."
             )
             output_file = get_output_file_path(
                 provided_path, user_args.type, True, name
