@@ -9,7 +9,7 @@ This script allows you to automatically scan through various types of japanese m
 
 It allows you to automatically add the english definitions of each word to the CSV, as well as furigana if desired. It also allows creating individual CSVs for each file/volume and creates another large CSV with all vocab divided by file/volume (useful for Bunpro Sections).
 
-The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro. 
+The resulting CSV can be imported to Anki or Bunpro. 
 
 *You may of course **share/upload** any lists created with this tool, but please leave a link to this repository whenever you do so other people can use it as well!*
 
