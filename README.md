@@ -65,7 +65,7 @@ Here are some manga specific options for handling multiple volumes:
 Here are all the available options shown together:
 
 ```
-jpvocab-extractor [-h] [--parent] [--add-english] [--furigana] --type TYPE input_path
+jpvocab-extractor [-h] [--parent] [--separate-vol] [--combine-vol] [--id] [--add-english] [--furigana] --type TYPE input_path
 ```
 
 ## Bunpro
