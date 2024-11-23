@@ -83,11 +83,15 @@ def main():
 
 
 def check_invalid_options(user_args):
-    if user_args.separate_vol and not user_args.type == "manga":
-        logging.error("Separate volumes can only be used with manga.")
+    if user_args.parent and user_args.type != "manga":
+        logging.error("Parent flag can only be used with manga.")
         exit(1)
 
-    if not user_args.separate_vol and user_args.combine_vol:
+    if user_args.separate_vol and not user_args.parent:
+        logging.error("Separate volumes can only be used with the parent attribute.")
+        exit(1)
+
+    if user_args.combine_vol and not user_args.separate_vol:
         logging.error("Combine volumes can only be used with separate volumes.")
         exit(1)
 

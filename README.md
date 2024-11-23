@@ -45,20 +45,32 @@ This will create a `vocab.csv` file with all the words found.
 
 ## Options
 
+You can add options to the command to change its behavior. For example:
 To add English definitions to the CSV, include the `--add-english` option:
 ```
 jpvocab-extractor --add-english --type TYPE input_path
 ```
 
-If you wish to add furigana (in the current implementation just the reading of the whole word in hiragana) to the word, add the `--furigana` option, just like the `--add-english` option. They can also be combined.
+Here is a list of all options:
+* --add-english: Looks up and adds the English translation of each word to the CSV file.
+* --furigana: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
+* --id: Replaces each word with its JMDict ID in the CSV file. Incompatible with the --furigana flag.
 
-For manga only: If you have a parent folder with multiple volumes in separate folders, add the `--parent` option.
+Here are some manga specific options for handling multiple volumes:
+* --parent: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
+* --separate-vol: Only relevant if processing a manga: each volume will be saved to a separate CSV file.
+* --combine-vol: Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.
+
 
 Here are all the available options shown together:
 
 ```
 jpvocab-extractor [-h] [--parent] [--add-english] [--furigana] --type TYPE input_path
 ```
+
+## Bunpro
+
+The setup you'd want for Bunpro isn't known yet, but I'll put the expected 
 
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 
