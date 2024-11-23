@@ -9,9 +9,14 @@ from pathlib import Path
 import regex as re
 
 
-def text_from_manga_folder(path: str, is_parent: bool) -> str:
+def texts_from_manga_folder(path: str, is_parent: bool) -> list[str]:
     run_mokuro(path, is_parent)
     return get_lines_from_mokuro_output(path, is_parent)
+
+
+def texts_from_manga_chapters(path: str) -> list[list[str]]:
+    run_mokuro(path, is_parent=True)
+    return get_lines_from_chapters(path)
 
 
 def run_mokuro(path: Path, is_parent: bool) -> None:
@@ -29,7 +34,32 @@ def run_mokuro(path: Path, is_parent: bool) -> None:
         logging.error("Mokuro failed to run.")
 
 
-def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list:
+def get_lines_from_chapters(path: Path) -> tuple[list[list[str]], list[str]]:
+    all_lines = []
+    folder_names = []
+    # Get me each individual folder containing json files
+    json_folders = find_folders_with_json_files(path)
+    for folder in json_folders:
+        all_lines.append(get_lines_from_json_folder(folder))
+        folder_names.append(folder.name)
+    return (all_lines, folder_names)
+
+
+def find_folders_with_json_files(path: Path) -> set[Path]:
+    json_files = path.rglob("*.json")
+    folders = {json_file.parent for json_file in json_files}
+    return folders
+
+
+def get_lines_from_json_folder(path: Path) -> list[str]:
+    all_lines = []
+    json_files = path.rglob("*.json")
+    for json_file in json_files:
+        all_lines.extend(process_json_file(json_file))
+    return all_lines
+
+
+def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list[str]:
     base_path = path if is_parent else path.parent
     ocr_result_path = base_path / "_ocr"
     json_files = ocr_result_path.rglob("*.json")
@@ -39,13 +69,13 @@ def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list:
     return all_lines
 
 
-def process_json_file(json_file: Path) -> list:
+def process_json_file(json_file: Path) -> list[str]:
     with open(json_file, "r", encoding="utf-8") as file:
         data = json.load(file)
         return extract_lines_from_data(data)
 
 
-def extract_lines_from_data(data: dict) -> list:
+def extract_lines_from_data(data: dict) -> list[str]:
     all_lines = []
     for block in data.get("blocks", []):
         lines = block.get("lines", [])

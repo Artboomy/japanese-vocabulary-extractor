@@ -15,6 +15,21 @@ def parse_arguments():
         help="Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.",
     )
     parser.add_argument(
+        "--separate-vol",
+        action="store_true",
+        help="Only relevant if processing a manga: each volume will be saved to a separate CSV file.",
+    )
+    parser.add_argument(
+        "--combine-vol",
+        action="store_true",
+        help='Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.',
+    )
+    parser.add_argument(
+        "--id",
+        action="store_true",
+        help="Replaces each word with its JMDict ID in the CSV file. Incompatible with the --furigana flag.",
+    )
+    parser.add_argument(
         "--add-english",
         action="store_true",
         help="Looks up and adds the English translation of each word to the CSV file.",

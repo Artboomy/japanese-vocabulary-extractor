@@ -20,7 +20,9 @@ def save_vocab_to_csv(vocab: set, output_file: Path):
             writer.writerow([word])
 
 
-def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
+def process_vocab_file(
+    vocab_file: Path, add_english: bool, add_furigana: bool, id: bool
+):
     line_count = count_lines(vocab_file)
 
     updated_rows = []
@@ -33,7 +35,7 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
 
         for row in tqdm(
             reader,
-            desc="Processing vocab file:",
+            desc=f"Processing vocab file {vocab_file.name}",
             total=line_count - 1,
         ):
             word = row[0]
@@ -55,11 +57,38 @@ def process_vocab_file(vocab_file: Path, add_english: bool, add_furigana: bool):
             if add_furigana and re.search(r"\p{Han}", word):
                 row[0] = f"{word} ({word_info['kana']})"
 
+            # Replace with ID if desired
+            if id:
+                row[0] = word_info["id"]
+
             updated_rows.append(row)
 
     with open(vocab_file, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerows(updated_rows)
+
+
+def combine_csvs(csv_files: list[Path]):
+    new_rows = []
+
+    # Add header
+    with open(csv_files[0], "r", newline="", encoding="utf-8") as file:
+        reader = csv.reader(file)
+        header = next(reader)
+        new_rows.append(header)
+
+    # Add chapters
+    for csv_file in csv_files:
+        with open(csv_file, "r", newline="", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            new_rows.append(["#" + csv_file.stem])
+            new_rows.extend(list(reader)[1:])
+
+    with open(
+        csv_files[0].parent / "vocab_combined.csv", "w", newline="", encoding="utf-8"
+    ) as file:
+        writer = csv.writer(file)
+        writer.writerows(new_rows)
 
 
 def count_lines(vocab_file: Path):
