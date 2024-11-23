@@ -59,7 +59,7 @@ Here is a list of all options:
 Here are some manga specific options for handling multiple volumes:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
 * `--separate-vol`: Only relevant if processing a manga: each volume will be saved to a separate CSV file.
-* `--combine-vol`: Only relevant if processing a manga and using the `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.
+* `--combine-vol`: Only relevant if processing a manga and using the `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.
 
 
 Here are all the available options shown together:

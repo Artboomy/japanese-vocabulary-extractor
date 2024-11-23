@@ -22,7 +22,7 @@ def parse_arguments():
     parser.add_argument(
         "--combine-vol",
         action="store_true",
-        help='Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section.',
+        help='Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.',
     )
     parser.add_argument(
         "--id",
