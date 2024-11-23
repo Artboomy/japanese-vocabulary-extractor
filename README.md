@@ -1,13 +1,13 @@
 # Japanese Vocabulary Extractor
 
-This script allows you to automatically scan through various types of japanese media and generate a csv with all contained words for studying. Currently supported formats are: 
+This script allows you to automatically scan through various types of japanese media and generate a CSV with all contained words for studying. Currently supported formats are: 
 
 * Manga (as images)
 * Subtitles (ASS/SRT files) from anime, shows or movies
 * PDF and EPUB files
 * Text (txt) files
 
-It also allows you to automatically add the english definitions of each word to the CSV, as well as furigana if desired.
+It allows you to automatically add the english definitions of each word to the CSV, as well as furigana if desired. It also allows creating individual CSVs for each file/volume and creates another large CSV with all vocab divided by file/volume (useful for Bunpro Sections).
 
 The resulting CSV can be imported to Anki (if you add the english definitions) or Bunpro.
 
@@ -55,7 +55,7 @@ Here is a list of all options:
 * `--add-english`: Looks up and adds the English translation of each word to the CSV file.
 * `--furigana`: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
 * `--id`: Replaces each word with its JMDict ID in the CSV file. Incompatible with the `--furigana` flag.
-* `--separate`: Each volume will be saved to a separate CSV file. This also created one big combined CSV with all vocab for each file/chapter in its own section, with duplicates removed. Requires `--parent` for manga.
+* `--separate`: Each volume/file will be saved to a separate CSV file. This also created one big combined `vocab_combined` CSV file with all vocab for each file/chapter in its own section, with duplicates removed. Requires `--parent` for manga.
 
 There is one option only used for manga:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
@@ -74,13 +74,15 @@ The setup you'd want for Bunpro isn't known yet, but I'll put the expected comma
 jpvocab-extractor --parent --separate --id --type manga input_path
 ```
 
-This would combine all volumes with their own section into one CSV file, with JMDict IDs for each word.
+This would combine all volumes into one CSV file, with JMDict IDs for each word. Each section will then correspond to one volume.
 
-For general creation of decks for media other than manga, you would only add the `--id` flag:
+For general creation of decks for media other than manga, you would only add the `--separate` and `--id` flag:
 
 ```
 jpvocab-extractor --separate --id --type TYPE input_path
 ```
+
+This will separate all vocab into sections for each file within the CSV. If you do not have multiple files or the need for sections in your deck, leave out `--separate`.
 
 ## Mokuro files
 
