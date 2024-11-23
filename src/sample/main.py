@@ -101,10 +101,10 @@ def texts_from_manga(
         logging.error("Provided path is not a directory.")
         exit(1)
     if separate_vols and is_parent:
-        vol_texts, names = ocr.texts_from_manga_chapters(provided_path)
+        volumes = ocr.texts_from_manga_chapters(provided_path)
     else:
-        vol_texts, names = ocr.texts_from_manga_folder(provided_path, is_parent)
-    return {name: text for name, text in zip(names, vol_texts)}
+        volumes = ocr.texts_from_manga_folder(provided_path, is_parent)
+    return volumes
 
 
 def texts_from_generic_file(

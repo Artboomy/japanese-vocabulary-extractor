@@ -11,7 +11,7 @@ import regex as re
 
 def texts_from_manga_folder(path: Path, is_parent: bool) -> dict[str, list[str]]:
     run_mokuro(path, is_parent)
-    return {path.stem: get_lines_from_mokuro_output(path, is_parent)}
+    return {path.name: get_lines_from_mokuro_output(path, is_parent)}
 
 
 def texts_from_manga_chapters(path: str) -> dict[str, list[str]]:
