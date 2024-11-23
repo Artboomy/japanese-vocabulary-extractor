@@ -8,7 +8,7 @@ from pathlib import Path
 import pypdf
 
 
-def text_from_pdf(pdf_path: Path) -> list:
+def texts_from_pdf(pdf_path: Path) -> list:
     pdf = pypdf.PdfReader(pdf_path.as_posix())
     pages = []
     for page in pdf.pages:

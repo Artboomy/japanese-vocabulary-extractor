@@ -28,7 +28,9 @@ def main():
         "manga": lambda: texts_from_manga(
             provided_path, user_args.parent, user_args.separate
         ),
-        "pdf": lambda: texts_from_generic_file(provided_path, "pdf", pdf.text_from_pdf),
+        "pdf": lambda: texts_from_generic_file(
+            provided_path, "pdf", pdf.texts_from_pdf
+        ),
         "epub": lambda: texts_from_generic_file(
             provided_path, "epub", epub.texts_from_epub
         ),
