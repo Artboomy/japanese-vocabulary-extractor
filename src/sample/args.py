@@ -15,14 +15,9 @@ def parse_arguments():
         help="Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.",
     )
     parser.add_argument(
-        "--separate-vol",
+        "--separate",
         action="store_true",
-        help="Only relevant if processing a manga: each volume will be saved to a separate CSV file.",
-    )
-    parser.add_argument(
-        "--combine-vol",
-        action="store_true",
-        help='Only relevant if processing a manga and using the --separate-vol flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.',
+        help="Each volume will be saved to a separate CSV file. This also created one big combined CSV with all vocab for each file/chapter in its own section, with duplicates removed. Requires --parent for manga.",
     )
     parser.add_argument(
         "--id",

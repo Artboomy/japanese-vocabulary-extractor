@@ -5,6 +5,7 @@
 from pathlib import Path
 import logging
 import colorlog
+from sympy import symarray
 
 # Local application imports
 from . import ocr
@@ -25,7 +26,7 @@ def main():
 
     extractors = {
         "manga": lambda: texts_from_manga(
-            provided_path, user_args.parent, user_args.separate_vol
+            provided_path, user_args.parent, user_args.separate
         ),
         "pdf": lambda: texts_from_generic_file(provided_path, "pdf", pdf.text_from_pdf),
         "epub": lambda: texts_from_generic_file(
@@ -40,36 +41,31 @@ def main():
     }
 
     try:
-        texts = extractors[user_args.type.lower()]()
+        results: tuple[list[list[str]], list[str]] = extractors[
+            user_args.type.lower()
+        ]()
     except KeyError:
         logging.error("Invalid type provided.")
         exit(1)
 
-    # Handle saving one or multiple CSVs
     csvs = []
-    if user_args.separate_vol and user_args.parent:
-        chapters = texts[0]
-        names = texts[1]
-        for chapter, name in zip(chapters, names):
-            logging.info(f"Getting vocabulary items from chapter {name}...")
-            vocab = tokenizer.vocab_from_texts(chapter)
-            logging.info(
-                f"Vocabulary from chapter {name}: {", ".join(list(vocab)[:10])}, ..."
-            )
-            output_file = get_output_file_path(
-                provided_path, user_args.type, True, name
-            )
-            csv.save_vocab_to_csv(vocab, output_file)
-            csvs.append(output_file)
-    else:
-        logging.info(f"Getting vocabulary items from texts...")
-        vocab = tokenizer.vocab_from_texts(texts)
-        logging.info(f"Vocabulary: {", ".join(list(vocab)[:50])}, ...")
-        output_file = get_output_file_path(
-            provided_path, user_args.type, user_args.parent
-        )
+    texts_from_files = results[0]
+    file_names = results[1]
+
+    # If user wishes not to separate, treat as one giant file
+    if not user_args.separate:
+        texts_from_files = [
+            [entry for subarray in texts_from_files for entry in subarray]
+        ]
+        file_names = ["all"]
+
+    for file, name in zip(texts_from_files, file_names):
+        logging.info(f"Getting vocabulary items from {name}...")
+        vocab = tokenizer.vocab_from_texts(file)
+        logging.info(f"Vocabulary from {name}: {", ".join(list(vocab)[:10])}, ...")
+        output_file = get_output_file_path(provided_path, user_args.type, True, name)
         csv.save_vocab_to_csv(vocab, output_file)
-        csvs = [output_file]
+        csvs.append(output_file)
 
     logging.info(f"Processing CSV(s) using dictionary...")
     for csv_file in csvs:
@@ -77,9 +73,11 @@ def main():
             csv_file, user_args.add_english, user_args.furigana, user_args.id
         )
 
-    if user_args.combine_vol:
+    if user_args.separate:
         logging.info("Combining volumes into a single CSV file...")
         csv.combine_csvs(csvs)
+
+    logging.info(f"Vocabulary saved into: {", ".join([csv.stem for csv in csvs])}")
 
 
 def check_invalid_options(user_args):
@@ -87,12 +85,10 @@ def check_invalid_options(user_args):
         logging.error("Parent flag can only be used with manga.")
         exit(1)
 
-    if user_args.separate_vol and not user_args.parent:
-        logging.error("Separate volumes can only be used with the parent attribute.")
-        exit(1)
-
-    if user_args.combine_vol and not user_args.separate_vol:
-        logging.error("Combine volumes can only be used with separate volumes.")
+    if user_args.separate and user_args.type == "manga" and not user_args.parent:
+        logging.error(
+            "Separate can only be used with the parent attribute when processing manga."
+        )
         exit(1)
 
     if user_args.furigana and user_args.id:
@@ -102,7 +98,7 @@ def check_invalid_options(user_args):
 
 def texts_from_manga(
     provided_path: Path, is_parent: bool, separate_vols: bool
-):  # This might return a list of strings or a list of lists of strings depending on the "separate_vol" flag, definitely not optimal but it works for now
+) -> tuple[list[list[str]], list[str]]:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
         exit(1)
@@ -111,12 +107,16 @@ def texts_from_manga(
     return ocr.texts_from_manga_folder(provided_path, is_parent)
 
 
-def texts_from_generic_file(provided_path: Path, ext: str, extract_func) -> list[str]:
-    texts = []
+def texts_from_generic_file(
+    provided_path: Path, ext: str, extract_func
+) -> tuple[list[list[str]], list[str]]:
+    file_texts = []
+    file_names = []
     files = get_files(provided_path, f"{ext}")
     for file in files:
-        texts.extend(extract_func(file))
-    return texts
+        file_texts.append(extract_func(file))
+        file_names.append(file.stem)
+    return (file_texts, file_names)
 
 
 def generic_extract(provided_path) -> list[str]:
@@ -137,6 +137,7 @@ def get_files(provided_path: Path, extension: str) -> list[Path]:
 def get_output_file_path(
     provided_path: Path, type: str, is_parent: bool, add: str = ""
 ) -> Path:
+    add = f"_{add}" if add else ""
     file_name = "vocab" + add + ".csv"
     if type == "manga":
         return (

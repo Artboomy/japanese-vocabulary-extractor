@@ -9,12 +9,14 @@ from pathlib import Path
 import regex as re
 
 
-def texts_from_manga_folder(path: str, is_parent: bool) -> list[str]:
+def texts_from_manga_folder(
+    path: Path, is_parent: bool
+) -> tuple[list[list[str]], list[str]]:
     run_mokuro(path, is_parent)
-    return get_lines_from_mokuro_output(path, is_parent)
+    return ([get_lines_from_mokuro_output(path, is_parent)], [f"{path.stem}"])
 
 
-def texts_from_manga_chapters(path: str) -> list[list[str]]:
+def texts_from_manga_chapters(path: str) -> tuple[list[list[str]], list[str]]:
     run_mokuro(path, is_parent=True)
     return get_lines_from_chapters(path)
 

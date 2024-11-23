@@ -98,6 +98,7 @@ def combine_csvs(csv_files: list[Path]):
             known_words.add(new_rows[i][0])
         i += 1
 
+    # Write file
     with open(
         csv_files[0].parent / "vocab_combined.csv", "w", newline="", encoding="utf-8"
     ) as file:

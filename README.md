@@ -55,17 +55,18 @@ Here is a list of all options:
 * `--add-english`: Looks up and adds the English translation of each word to the CSV file.
 * `--furigana`: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
 * `--id`: Replaces each word with its JMDict ID in the CSV file. Incompatible with the `--furigana` flag.
+* `--separate`: Each volume will be saved to a separate CSV file. This also created one big combined CSV with all vocab for each file/chapter in its own section, with duplicates removed. Requires `--parent` for manga.
 
-Here are some manga specific options for handling multiple volumes:
+There is one option only used for manga:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
-* `--separate-vol`: Only relevant if using `--parent`: each volume will be saved to a separate CSV file.
-* `--combine-vol`: Only relevant if using `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.
+
+
 
 
 Here are all the available options shown together:
 
 ```
-jpvocab-extractor [-h] [--parent] [--separate-vol] [--combine-vol] [--id] [--add-english] [--furigana] --type TYPE input_path
+jpvocab-extractor [-h] [--parent] [--separate] [--id] [--add-english] [--furigana] --type TYPE input_path
 ```
 
 ## Bunpro
@@ -73,7 +74,7 @@ jpvocab-extractor [-h] [--parent] [--separate-vol] [--combine-vol] [--id] [--add
 The setup you'd want for Bunpro isn't known yet, but I'll put the expected command that should work best for manga here:
 
 ```
-jpvocab-extractor --parent --separate-vol --combine-vol --id --type manga input_path
+jpvocab-extractor --parent --separate --id --type manga input_path
 ```
 
 This would combine all volumes with their own section into one CSV file, with JMDict IDs for each word.
