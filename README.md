@@ -13,7 +13,8 @@ The resulting CSV can be imported to Anki (if you add the english definitions) o
 
 # Installation
 
-You need to have Python installed on your computer. I recommend using Python 3.12 (Make sure to tick the "Add Python to PATH" checkbox during the installation)
+You need to have Python installed on your computer. I recommend using Python 3.12 (Make sure to tick the "Add Python to PATH" checkbox during the installation).
+I encountered errors during the installation on Windows with Python 3.13 so in that case, try Python 3.12.
 
 To install the Japanese Vocabulary Extractor, follow these steps:
 
