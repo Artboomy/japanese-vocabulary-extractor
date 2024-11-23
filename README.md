@@ -82,7 +82,7 @@ This would combine all volumes with their own section into one CSV file, with JM
 For general creation of decks for media other than manga, you would only add the `--id` flag:
 
 ```
-jpvocab-extractor --id --type TYPE input_path
+jpvocab-extractor --separate --id --type TYPE input_path
 ```
 
 ## Mokuro files
