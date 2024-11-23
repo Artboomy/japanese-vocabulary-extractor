@@ -9,14 +9,12 @@ from pathlib import Path
 import regex as re
 
 
-def texts_from_manga_folder(
-    path: Path, is_parent: bool
-) -> tuple[list[list[str]], list[str]]:
+def texts_from_manga_folder(path: Path, is_parent: bool) -> dict[str, list[str]]:
     run_mokuro(path, is_parent)
-    return ([get_lines_from_mokuro_output(path, is_parent)], [f"{path.stem}"])
+    return {path.stem: get_lines_from_mokuro_output(path, is_parent)}
 
 
-def texts_from_manga_chapters(path: str) -> tuple[list[list[str]], list[str]]:
+def texts_from_manga_chapters(path: str) -> dict[str, list[str]]:
     run_mokuro(path, is_parent=True)
     return get_lines_from_chapters(path)
 
@@ -36,15 +34,13 @@ def run_mokuro(path: Path, is_parent: bool) -> None:
         logging.error("Mokuro failed to run.")
 
 
-def get_lines_from_chapters(path: Path) -> tuple[list[list[str]], list[str]]:
-    all_lines = []
-    folder_names = []
-    # Get me each individual folder containing json files
+def get_lines_from_chapters(path: Path) -> dict[str, list[str]]:
+    chapters = {}
+    # Get each individual folder containing json files
     json_folders = find_folders_with_json_files(path)
     for folder in json_folders:
-        all_lines.append(get_lines_from_json_folder(folder))
-        folder_names.append(folder.name)
-    return (all_lines, folder_names)
+        chapters[folder.name] = get_lines_from_json_folder(folder)
+    return chapters
 
 
 def find_folders_with_json_files(path: Path) -> set[Path]:

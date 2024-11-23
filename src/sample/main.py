@@ -35,33 +35,26 @@ def main():
             provided_path, "epub", epub.texts_from_epub
         ),
         "txt": lambda: texts_from_generic_file(provided_path, "txt", generic_extract),
-        "subtitle": lambda: texts_from_generic_file(
-            provided_path, "ass", generic_extract
-        )
-        + texts_from_generic_file(provided_path, "srt", generic_extract),
+        "subtitle": lambda: texts_from_subtitles(provided_path),
         "generic": lambda: texts_from_generic_file(provided_path, "*", generic_extract),
     }
 
     try:
-        results: tuple[list[list[str]], list[str]] = extractors[
-            user_args.type.lower()
-        ]()
+        results: dict[str, list[str]] = extractors[user_args.type.lower()]()
     except KeyError:
         logging.error("Invalid type provided.")
         exit(1)
 
     csvs = []
-    texts_from_files = results[0]
-    file_names = results[1]
 
     # If user wishes not to separate, treat as one giant file
     if not user_args.separate:
-        texts_from_files = [
-            [entry for subarray in texts_from_files for entry in subarray]
-        ]
-        file_names = ["all"]
+        combined_values = []
+        for value in results.values():
+            combined_values.extend(value)
+        results = {"all": combined_values}
 
-    for file, name in zip(texts_from_files, file_names):
+    for name, file in results.items():
         logging.info(f"Getting vocabulary items from {name}...")
         vocab = tokenizer.vocab_from_texts(file)
         logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:10])}, ...")
@@ -77,9 +70,12 @@ def main():
 
     if user_args.separate:
         logging.info("Combining volumes into a single CSV file...")
-        csv.combine_csvs(csvs)
+        output = csv.combine_csvs(csvs)
+        csvs.append(output)
 
-    logging.info(f"Vocabulary saved into: {', '.join([csv.stem for csv in csvs])}")
+    logging.info(
+        f"Vocabulary saved into: {', '.join([csv.stem for csv in csvs])} in folder {csvs[0].parent.as_posix()}"
+    )
 
 
 def check_invalid_options(user_args):
@@ -100,25 +96,33 @@ def check_invalid_options(user_args):
 
 def texts_from_manga(
     provided_path: Path, is_parent: bool, separate_vols: bool
-) -> tuple[list[list[str]], list[str]]:
+) -> dict[str, list[str]]:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
         exit(1)
     if separate_vols and is_parent:
-        return ocr.texts_from_manga_chapters(provided_path)
-    return ocr.texts_from_manga_folder(provided_path, is_parent)
+        vol_texts, names = ocr.texts_from_manga_chapters(provided_path)
+    else:
+        vol_texts, names = ocr.texts_from_manga_folder(provided_path, is_parent)
+    return {name: text for name, text in zip(names, vol_texts)}
 
 
 def texts_from_generic_file(
     provided_path: Path, ext: str, extract_func
-) -> tuple[list[list[str]], list[str]]:
-    file_texts = []
-    file_names = []
+) -> dict[str, list[str]]:
+    file_texts = {}
     files = get_files(provided_path, f"{ext}")
     for file in files:
-        file_texts.append(extract_func(file))
-        file_names.append(file.stem)
-    return (file_texts, file_names)
+        file_texts[file.stem] = extract_func(file)
+    return file_texts
+
+
+def texts_from_subtitles(
+    provided_path: Path,
+) -> dict[str, list[str]]:
+    combined = texts_from_generic_file(provided_path, "ass", generic_extract)
+    combined.update(texts_from_generic_file(provided_path, "srt", generic_extract))
+    return combined
 
 
 def generic_extract(provided_path) -> list[str]:

@@ -68,7 +68,7 @@ def process_vocab_file(
         writer.writerows(updated_rows)
 
 
-def combine_csvs(csv_files: list[Path]):
+def combine_csvs(csv_files: list[Path]) -> Path:
     new_rows = []
 
     # Add header
@@ -104,6 +104,8 @@ def combine_csvs(csv_files: list[Path]):
     ) as file:
         writer = csv.writer(file)
         writer.writerows(new_rows)
+
+    return csv_files[0].parent / "vocab_combined.csv"
 
 
 def count_lines(vocab_file: Path):
