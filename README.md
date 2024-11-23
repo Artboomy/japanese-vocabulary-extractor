@@ -58,8 +58,8 @@ Here is a list of all options:
 
 Here are some manga specific options for handling multiple volumes:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
-* `--separate-vol`: Only relevant if processing a manga: each volume will be saved to a separate CSV file.
-* `--combine-vol`: Only relevant if processing a manga and using the `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.
+* `--separate-vol`: Only relevant if using `--parent`: each volume will be saved to a separate CSV file.
+* `--combine-vol`: Only relevant if using `--separate-vol` flag: all volumes will be combined into a single CSV file with their respective chapter name inserted as "#chapter1" above each section. This also removes duplicates that appeared in earlier volumes.
 
 
 Here are all the available options shown together:
@@ -98,6 +98,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
+* Separate files/csv sections for each file for formats other than manga
 * Better furigana after each kanji instead of just the whole word
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs, Audio files?) Please suggest any you might want, even the ones listed already!
