@@ -120,4 +120,4 @@ This is hardly my work, I just stringed together some amazing libraries:
 
 # Support me
 
-If you find this program helpful and would like to support what I'm doing, feel free to buy me a coffee on kofi! https://ko-fi.com/fluttr
+If you find this program helpful and would like to support what I'm doing, feel free to buy me a coffee (or tea, i prefer tea...) on kofi! https://ko-fi.com/fluttr
