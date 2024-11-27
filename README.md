@@ -117,3 +117,7 @@ This is hardly my work, I just stringed together some amazing libraries:
 * mecab-python3, to tokenize japanese text and extract the dictionary forms - https://github.com/SamuraiT/mecab-python3
 * unidic_lite, for data necessary for mecab to work - https://github.com/polm/unidic-lite
 * jamdict and jmdict, for the dictionary data - https://github.com/neocl/jamdict, https://www.edrdg.org/jmdict/j_jmdict.html
+
+# Support me
+
+If you find this program helpful and would like to support what I'm doing, feel free to buy me a coffee (or tea, i prefer tea...) on kofi! https://ko-fi.com/fluttr
