@@ -5,10 +5,13 @@
 import logging
 from jamdict import Jamdict
 
-jam = Jamdict()
+
+def get_jamdict_instance():
+    jam = Jamdict()
+    return jam
 
 
-def get_word_info(word: str) -> dict:
+def get_word_info(word: str, jam) -> dict:
     result = jam.lookup(word)
     if len(result.entries) == 0:
         return {"definition": "", "kana": "", "is_real": False, "id": ""}

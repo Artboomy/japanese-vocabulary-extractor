@@ -5,7 +5,6 @@
 import csv
 import logging
 from pathlib import Path
-from tqdm import tqdm
 import regex as re
 
 # Local imports
@@ -23,7 +22,7 @@ def save_vocab_to_csv(vocab: set, output_file: Path):
 def process_vocab_file(
     vocab_file: Path, add_english: bool, add_furigana: bool, id: bool
 ):
-    line_count = count_lines(vocab_file)
+    jamdict = dictionary.get_jamdict_instance()
 
     updated_rows = []
     with open(vocab_file, "r", newline="", encoding="utf-8") as file:
@@ -33,13 +32,9 @@ def process_vocab_file(
             headers.append("definition")
         updated_rows.append(headers)
 
-        for row in tqdm(
-            reader,
-            desc=f"Processing vocab file {vocab_file.name}",
-            total=line_count - 1,
-        ):
+        for row in reader:
             word = row[0]
-            word_info = dictionary.get_word_info(word)
+            word_info = dictionary.get_word_info(word, jamdict)
 
             # I currently decided one-letter kana words are not worth keeping in
             # because the definitions fetched for them are absolutely useless. This could
@@ -106,10 +101,3 @@ def combine_csvs(csv_files: list[Path]) -> Path:
         writer.writerows(new_rows)
 
     return csv_files[0].parent / "vocab_combined.csv"
-
-
-def count_lines(vocab_file: Path):
-    with open(vocab_file, "r", newline="", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        line_count = sum(1 for row in reader)
-    return line_count

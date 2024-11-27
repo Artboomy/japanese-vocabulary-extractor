@@ -5,7 +5,8 @@
 from pathlib import Path
 import logging
 import colorlog
-from sympy import symarray
+import sys
+from tqdm.contrib.concurrent import thread_map
 
 # Local application imports
 from . import ocr
@@ -43,9 +44,7 @@ def main():
         results: dict[str, list[str]] = extractors[user_args.type.lower()]()
     except KeyError:
         logging.error("Invalid type provided.")
-        exit(1)
-
-    csvs = []
+        sys.exit(1)
 
     # If user wishes not to separate, treat as one giant file
     if not user_args.separate:
@@ -54,6 +53,7 @@ def main():
             combined_values.extend(value)
         results = {"all": combined_values}
 
+    csvs = []
     for name, file in results.items():
         logging.info(f"Getting vocabulary items from {name}...")
         vocab = tokenizer.vocab_from_texts(file)
@@ -62,11 +62,10 @@ def main():
         csv.save_vocab_to_csv(vocab, output_file)
         csvs.append(output_file)
 
-    logging.info(f"Processing CSV(s) using dictionary...")
-    for csv_file in csvs:
-        csv.process_vocab_file(
-            csv_file, user_args.add_english, user_args.furigana, user_args.id
-        )
+    logging.info(
+        f"Processing CSV(s) using dictionary (this might take a few minutes, do not worry if it looks stuck)..."
+    )
+    process_csvs(csvs, user_args)
 
     if user_args.separate:
         logging.info("Combining volumes into a single CSV file...")
@@ -78,20 +77,34 @@ def main():
     )
 
 
+def process_csvs(csvs, user_args):
+    try:
+        thread_map(
+            lambda csv_file: csv.process_vocab_file(
+                csv_file, user_args.add_english, user_args.furigana, user_args.id
+            ),
+            csvs,
+            max_workers=len(csvs),
+        )
+    except KeyboardInterrupt:
+        logging.info("Process interrupted by user.")
+        sys.exit(0)
+
+
 def check_invalid_options(user_args):
     if user_args.parent and user_args.type != "manga":
         logging.error("Parent flag can only be used with manga.")
-        exit(1)
+        sys.exit(1)
 
     if user_args.separate and user_args.type == "manga" and not user_args.parent:
         logging.error(
             "Separate can only be used with the parent attribute when processing manga."
         )
-        exit(1)
+        sys.exit(1)
 
     if user_args.furigana and user_args.id:
         logging.error("Furigana and ID are incompatible.")
-        exit(1)
+        sys.exit(1)
 
 
 def texts_from_manga(
@@ -99,7 +112,7 @@ def texts_from_manga(
 ) -> dict[str, list[str]]:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
-        exit(1)
+        sys.exit(1)
     if separate_vols and is_parent:
         volumes = ocr.texts_from_manga_chapters(provided_path)
     else:
@@ -136,7 +149,7 @@ def get_files(provided_path: Path, extension: str) -> list[Path]:
         files = [provided_path]
     else:
         logging.error("Provided path is not a file or directory.")
-        exit(1)
+        sys.exit(1)
     return [file for file in files if file.is_file()]
 
 
@@ -166,6 +179,11 @@ def configure_logging() -> None:
     )
     logging.getLogger().addHandler(handler)
     logging.getLogger().setLevel(logging.INFO)
+
+    jamdict_logger = logging.getLogger("chirptext.leutile")
+    jamdict_logger.setLevel(
+        logging.WARNING
+    )  # Set to WARNING to suppress INFO logs about config loads
 
 
 if __name__ == "__main__":

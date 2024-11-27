@@ -16,7 +16,7 @@ def texts_from_manga_folder(path: Path, is_parent: bool) -> dict[str, list[str]]
 
 def texts_from_manga_chapters(path: str) -> dict[str, list[str]]:
     run_mokuro(path, is_parent=True)
-    return get_lines_from_chapters(path)
+    return get_lines_from_volumes(path)
 
 
 def run_mokuro(path: Path, is_parent: bool) -> None:
@@ -29,12 +29,14 @@ def run_mokuro(path: Path, is_parent: bool) -> None:
         logging.info(f"Running mokuro with command: {command}")
         logging.info("This may take a while...")
         subprocess.run(command, text=True, check=True)
-        logging.info("Mokuro finished running")
+        logging.info(
+            "Mokuro finished running. Do not worry if it looks stuck for a second."
+        )
     except subprocess.CalledProcessError as e:
         logging.error("Mokuro failed to run.")
 
 
-def get_lines_from_chapters(path: Path) -> dict[str, list[str]]:
+def get_lines_from_volumes(path: Path) -> dict[str, list[str]]:
     chapters = {}
     # Get each individual folder containing json files
     json_folders = find_folders_with_json_files(path)
@@ -45,7 +47,11 @@ def get_lines_from_chapters(path: Path) -> dict[str, list[str]]:
 
 def find_folders_with_json_files(path: Path) -> set[Path]:
     json_files = path.rglob("*.json")
-    folders = {json_file.parent for json_file in json_files}
+    folders = {
+        json_file.parent
+        for json_file in json_files
+        if json_file.parent.parent == path / "_ocr"
+    }
     return folders
 
 

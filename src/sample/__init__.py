@@ -6,7 +6,7 @@ from .ocr import (
     texts_from_manga_folder,
     texts_from_manga_chapters,
     run_mokuro,
-    get_lines_from_chapters,
+    get_lines_from_volumes,
     find_folders_with_json_files,
     get_lines_from_json_folder,
     get_lines_from_mokuro_output,
@@ -24,7 +24,7 @@ from .main import (
     configure_logging,
     check_invalid_options,
 )
-from .csv import save_vocab_to_csv, process_vocab_file, combine_csvs, count_lines
+from .csv import save_vocab_to_csv, process_vocab_file, combine_csvs
 from .pdf import texts_from_pdf
 from .epub import texts_from_epub
 from .args import parse_arguments
@@ -35,7 +35,7 @@ __all__ = [
     "texts_from_manga_folder",
     "texts_from_manga_chapters",
     "run_mokuro",
-    "get_lines_from_chapters",
+    "get_lines_from_volumes",
     "find_folders_with_json_files",
     "get_lines_from_json_folder",
     "get_lines_from_mokuro_output",
@@ -53,7 +53,6 @@ __all__ = [
     "save_vocab_to_csv",
     "process_vocab_file",
     "combine_csvs",
-    "count_lines",
     "texts_from_pdf",
     "texts_from_epub",
     "parse_arguments",
