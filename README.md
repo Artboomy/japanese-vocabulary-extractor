@@ -101,8 +101,7 @@ Also important: This script is not perfect. The text recognition can make mistak
 
 # TODO
 
-* Separate files/csv sections for each file for formats other than manga
-* Better furigana after each kanji instead of just the whole word
+* Better furigana (after each kanji instead of just the whole word)
 * More advanced dictionary lookup functionality
 * Support more input formats (Games, VNs, Audio files?) Please suggest any you might want, even the ones listed already!
 * Support other output formats
