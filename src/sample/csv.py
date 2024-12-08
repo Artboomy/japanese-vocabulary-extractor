@@ -11,7 +11,7 @@ import regex as re
 from . import dictionary
 
 
-def save_vocab_to_csv(vocab: set, output_file: Path):
+def save_vocab_to_csv(vocab: list, output_file: Path):
     with open(output_file, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["word"])

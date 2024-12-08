@@ -10,8 +10,8 @@ from tqdm import tqdm
 import MeCab
 
 
-def vocab_from_texts(texts: list) -> set:
-    vocab = set()
+def vocab_from_texts(texts: list) -> list:
+    vocab = []
     mecab = MeCab.Tagger()
 
     confirm_japanese_pattern = re.compile(r"[\p{IsHiragana}\p{IsKatakana}\p{IsHan}]+")
@@ -40,6 +40,17 @@ def vocab_from_texts(texts: list) -> set:
             # Sometimes the base form is followed by a hyphen and more text about word type
             base_form = base_form.split("-")[0]
             if confirm_japanese_pattern.match(base_form):
-                vocab.add(base_form)
+                vocab.append(base_form)
+
+    # Remove duplicates from list (not using a set to preserve order)
+    known_words = set()
+    i = 0
+    while i < len(vocab):
+        if vocab[i] in known_words:
+            vocab.pop(i)
+            i -= 1
+        else:
+            known_words.add(vocab[i])
+        i += 1
 
     return vocab
