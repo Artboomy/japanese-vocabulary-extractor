@@ -58,7 +58,7 @@ Here is a list of all options:
 * `--add-english`: Looks up and adds the English translation of each word to the CSV file.
 * `--furigana`: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
 * `--id`: Replaces each word with its JMDict ID in the CSV file. Incompatible with the `--furigana` flag.
-* `--separate`: Each volume/file will be saved to a separate CSV file. This also creates one big combined `vocab_combined` CSV file with all vocab for each file/chapter in its own section, with duplicates removed. Make sure the folders are alphabetically sorted for a correct section order! Requires `--parent` for manga.
+* `--separate`: Each volume/file will be saved to a separate CSV file. This also creates one big combined `vocab_combined.csv` file with all vocab for each file/chapter in its own section, with duplicates removed. Make sure the folders are alphabetically sorted for a correct section order! Requires `--parent` for manga.
 
 There is one option only used for manga:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
@@ -77,7 +77,9 @@ This command for manga will work best for Bunpro:
 jpvocab-extractor --parent --separate --id --type manga input_path
 ```
 
-This would combine all volumes into one CSV file, with JMDict IDs for each word. Each unit will then correspond to one volume.
+`--parent` marks that the folder contains other folders containing volumes.
+`--separate` creates a separate CSV file for each volume, and then combines them into a neat sectioned combined CSV file. This basically automatically creates Units in Bunpro for each volume.
+`--id` replaces each word with its JMDict ID, making importing much more consistent.
 
 For general creation of decks for media other than manga, you would only add the `--separate` and `--id` flag:
 
