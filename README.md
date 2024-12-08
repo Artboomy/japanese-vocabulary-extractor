@@ -7,7 +7,7 @@ This script allows you to automatically scan through various types of japanese m
 * PDF and EPUB files
 * Text (txt) files
 
-It allows you to automatically add the english definitions of each word to the CSV, as well as furigana if desired. It also allows creating individual CSVs for each file/volume and creates another large CSV with all vocab divided by file/volume (useful for Bunpro Sections).
+It allows you to automatically add the english definitions of each word to the CSV, as well as furigana if desired. It also allows creating individual CSVs for each file/volume and creates another large CSV with all vocab divided by file/volume (useful for Bunpro Units).
 
 The resulting CSV can be imported to Anki or Bunpro. 
 
@@ -71,13 +71,13 @@ jpvocab-extractor [-h] [--parent] [--separate] [--id] [--add-english] [--furigan
 
 ## Bunpro
 
-The setup you'd want for Bunpro isn't known yet, but I'll put the expected command that should work best for manga here:
+This command for manga will work best for Bunpro:
 
 ```
 jpvocab-extractor --parent --separate --id --type manga input_path
 ```
 
-This would combine all volumes into one CSV file, with JMDict IDs for each word. Each section will then correspond to one volume.
+This would combine all volumes into one CSV file, with JMDict IDs for each word. Each unit will then correspond to one volume.
 
 For general creation of decks for media other than manga, you would only add the `--separate` and `--id` flag:
 
