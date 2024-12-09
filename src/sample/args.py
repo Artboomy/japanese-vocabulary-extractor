@@ -35,6 +35,11 @@ def parse_arguments():
         help="Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.",
     )
     parser.add_argument(
+        "--freq-order",
+        action="store_true",
+        help="Vocab will not be stored in order of appearance but in order of frequency in the given source material.",
+    )
+    parser.add_argument(
         "--type",
         type=str,
         required=True,

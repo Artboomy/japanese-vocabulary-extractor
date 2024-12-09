@@ -59,6 +59,7 @@ Here is a list of all options:
 * `--furigana`: Add furigana to all words in the CSV file. Note that this is quite primitive, it just adds the reading of the whole word in hiragana in brackets.
 * `--id`: Replaces each word with its JMDict ID in the CSV file. Incompatible with the `--furigana` flag.
 * `--separate`: Each volume/file will be saved to a separate CSV file. This also creates one big combined `vocab_combined.csv` file with all vocab for each file/chapter in its own section, with duplicates removed. Make sure the folders are alphabetically sorted for a correct section order! Requires `--parent` for manga.
+* `--freq-order`: Vocab will not be stored in order of appearance but in order of frequency in the given source material.
 
 There is one option only used for manga:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.

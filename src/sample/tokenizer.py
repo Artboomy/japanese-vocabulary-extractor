@@ -10,7 +10,7 @@ from tqdm import tqdm
 import MeCab
 
 
-def vocab_from_texts(texts: list) -> list:
+def vocab_from_texts(texts: list, freq_order: bool) -> list:
     vocab = []
     mecab = MeCab.Tagger()
 
@@ -42,7 +42,27 @@ def vocab_from_texts(texts: list) -> list:
             if confirm_japanese_pattern.match(base_form):
                 vocab.append(base_form)
 
+    if freq_order:
+        freq = get_word_frequencies(vocab)
+
     # Remove duplicates from list (not using a set to preserve order)
+    vocab = remove_duplicates(vocab)
+
+    if freq_order:
+        vocab = sorted(vocab, key=lambda word: freq[word], reverse=True)
+
+    return vocab
+
+
+def get_word_frequencies(vocab: list):
+    freq = dict()
+    for word in vocab:
+        if word not in freq:
+            freq[word] = 0
+        freq[word] += 1
+
+
+def remove_duplicates(vocab: list) -> list:
     known_words = set()
     i = 0
     while i < len(vocab):
@@ -52,5 +72,4 @@ def vocab_from_texts(texts: list) -> list:
         else:
             known_words.add(vocab[i])
         i += 1
-
     return vocab
