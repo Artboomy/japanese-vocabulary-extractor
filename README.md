@@ -71,12 +71,6 @@ Here is a list of all options:
 There is one option only used for manga:
 * `--parent`: Only relevant if processing a manga: provided folder contains multiple volumes. Each folder will be treated as its own volume.
 
-Here are all the available options shown together:
-
-```
-jpvocab-extractor [-h] [--parent] [--separate] [--id] [--add-english] [--furigana] --type TYPE input_path
-```
-
 ## Bunpro
 
 This command for manga will work best for Bunpro:
