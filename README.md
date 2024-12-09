@@ -31,7 +31,6 @@ This will download and install the necessary files for the tool to work.
 ## Updating
 
 To update, run the following command:
-
     ```
     pip install --upgrade japanese-vocabulary-extractor
     ``` 
