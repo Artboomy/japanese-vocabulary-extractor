@@ -60,6 +60,7 @@ def get_word_frequencies(vocab: list):
         if word not in freq:
             freq[word] = 0
         freq[word] += 1
+    return freq
 
 
 def remove_duplicates(vocab: list) -> list:
