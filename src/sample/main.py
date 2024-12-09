@@ -54,9 +54,9 @@ def main():
         results = {"all": combined_values}
 
     csvs = []
-    for name, file in results.items():
+    for name, texts in results.items():
         logging.info(f"Getting vocabulary items from {name}...")
-        vocab = tokenizer.vocab_from_texts(file, user_args.freq_order)
+        vocab = tokenizer.vocab_from_texts(texts, user_args.freq_order)
         logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:10])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
         csv.save_vocab_to_csv(vocab, output_file)

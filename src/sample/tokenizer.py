@@ -16,7 +16,6 @@ def vocab_from_texts(texts: list, freq_order: bool) -> list:
 
     confirm_japanese_pattern = re.compile(r"[\p{IsHiragana}\p{IsKatakana}\p{IsHan}]+")
     katakana_only_pattern = re.compile(r"[\p{IsKatakana}]+")
-    logging.info("Extracting vocabulary from texts...")
 
     for text in texts:
         parsed = mecab.parse(text)
