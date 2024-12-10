@@ -139,7 +139,7 @@ def texts_from_subtitles(
 
 
 def generic_extract(provided_path) -> list[str]:
-    return provided_path.read_text().split()
+    return provided_path.read_text(encoding="utf-8").split()
 
 
 def get_files(provided_path: Path, extension: str) -> list[Path]:
