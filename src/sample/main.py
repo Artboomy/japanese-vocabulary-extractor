@@ -7,6 +7,7 @@ import logging
 import colorlog
 import sys
 from tqdm.contrib.concurrent import thread_map
+from multiprocessing import cpu_count
 
 # Local application imports
 from . import ocr
@@ -84,7 +85,7 @@ def process_csvs(csvs, user_args):
                 csv_file, user_args.add_english, user_args.furigana, user_args.id
             ),
             csvs,
-            max_workers=len(csvs),
+            max_workers=cpu_count(),
         )
     except KeyboardInterrupt:
         logging.info("Process interrupted by user.")
