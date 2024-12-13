@@ -79,7 +79,7 @@ def combine_csvs(csv_files: list[Path]) -> Path:
     for csv_file in csv_files:
         with open(csv_file, "r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
-            new_rows.append(["#" + csv_file.stem])
+            new_rows.append(["#" + csv_file.stem.replace("vocab_", "")])
             new_rows.extend(list(reader)[1:])
 
     # Remove all duplicates while preserving order
