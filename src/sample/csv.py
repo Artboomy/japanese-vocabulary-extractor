@@ -93,6 +93,16 @@ def combine_csvs(csv_files: list[Path]) -> Path:
             known_words.add(new_rows[i][0])
         i += 1
 
+    # Remove all empty chapters (chapters followed immediately by another chapter)
+    i = 0
+    while i < len(new_rows) - 1:
+        if new_rows[i][0].startswith("#") and new_rows[i + 1][0].startswith("#"):
+            new_rows.pop(i)
+            i -= 1
+        i += 1
+    if new_rows[-1][0].startswith("#"):
+        new_rows.pop(-1)
+
     # Write file
     with open(
         csv_files[0].parent / "vocab_combined.csv", "w", newline="", encoding="utf-8"
