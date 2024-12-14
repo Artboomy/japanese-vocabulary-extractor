@@ -100,7 +100,7 @@ Bonus: Using this script with manga will also generate `.mokuro` and `.html` fil
 
 # Notices/Limitations
 
-I think the biggest issue currently is quality of source material. If you have an ebook with 5 pages of random stuff about the authors on the first page, your vocabulary list is going to be filled with useless words in the beginning. I often found subtitles that contain furigana after the kanji and the program occasionally came up with silly matches for those too. So if you want a consistent, good result, clean up your input as much as you can.
+I think the biggest issue currently is quality of source material. If you have an ebook with 5 pages of random stuff about the authors at the beginning, your vocabulary list is going to be filled with useless words in the beginning. I often found subtitles that contain furigana after the kanji and the program occasionally came up with silly matches for those too. So if you want a consistent, good result, clean up your input as much as you can.
 
 If you run into errors, look into the mokuro repository linked at the bottom. There might be some issues with python version compatibility.
 
