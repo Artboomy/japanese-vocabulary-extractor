@@ -98,7 +98,9 @@ This will separate all vocab into sections for each file within the CSV. If you 
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
 
 
-# Notices
+# Notices/Limitations
+
+I think the biggest issue currently is quality of source material. If you have an ebook with 5 pages of random stuff about the authors on the first page, your vocabulary list is going to be filled with useless words in the beginning. I often found subtitles that contain furigana after the kanji and the program occasionally came up with silly matches for those too. So if you want a consistent, good result, clean up your input as much as you can.
 
 If you run into errors, look into the mokuro repository linked at the bottom. There might be some issues with python version compatibility.
 
