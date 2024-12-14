@@ -91,6 +91,8 @@ jpvocab-extractor --separate --id --type TYPE input_path
 
 This will separate all vocab into sections for each file within the CSV. If you do not have multiple files or the need for sections in your deck, leave out `--separate`.
 
+**Tip***: Rename the files or volume folders you are turning into units to the exact name you want for the Unit on Bunpro. This will make sure the unit has exactly that name after the import and you don't need to edit them. Use a renaming utility to batch-rename the files if doing it manually is too tedious.
+
 ## Mokuro files
 
 Bonus: Using this script with manga will also generate `.mokuro` and `.html` files for each volume, allowing you to read the manga with selectable text in your browser. For more details, visit the mokuro GitHub page linked at the bottom.
