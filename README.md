@@ -28,6 +28,8 @@ To install the Japanese Vocabulary Extractor, follow these steps:
 
 This will download and install the necessary files for the tool to work.
 
+**NOTICE**: There is currently a bug within the dependencies that you might encounter when processing manga. If you get an error saying `AttributeError: module 'numpy' has no attribute 'bool8'. Did you mean: 'bool'?`, run this command to downgrade numpy: `pip install numpy==1.26.4`. 
+
 ## Updating
 
 To update, run the following command:
