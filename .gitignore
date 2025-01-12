@@ -158,3 +158,7 @@ cython_debug/
 *~ 
 *.swp
 *.swo
+
+# test data folders
+input
+src/input

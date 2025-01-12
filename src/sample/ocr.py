@@ -7,7 +7,7 @@ import json
 import logging
 from pathlib import Path
 import regex as re
-
+import os
 
 def texts_from_manga_folder(path: Path, is_parent: bool) -> dict[str, list[str]]:
     run_mokuro(path, is_parent)
@@ -66,10 +66,16 @@ def get_lines_from_json_folder(path: Path) -> list[str]:
 def get_lines_from_mokuro_output(path: Path, is_parent: bool) -> list[str]:
     base_path = path if is_parent else path.parent
     ocr_result_path = base_path / "_ocr"
+    manga_name = os.path.basename(os.path.normpath(path))
     json_files = ocr_result_path.rglob("*.json")
     all_lines = []
     for json_file in json_files:
-        all_lines.extend(process_json_file(json_file))
+        # if multiple manga items are in the same folder, we need to check to prevent cross-manga vocab pollution
+        if manga_name in json_file.parts:
+            logging.debug(f"Processing {json_file}")
+            all_lines.extend(process_json_file(json_file))
+        else:
+            logging.debug(f"Ignoring {json_file}")
     return all_lines
 
 

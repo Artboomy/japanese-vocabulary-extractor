@@ -56,7 +56,7 @@ packaging==24.2
 pillow==11.0.0
 pkginfo==1.10.0
 plac==1.4.3
-puchikarui==0.1
+puchikarui==0.2a1
 pyclipper==1.3.0.post6
 pycparser==2.22
 Pygments==2.18.0

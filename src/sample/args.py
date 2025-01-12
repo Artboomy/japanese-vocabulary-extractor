@@ -46,6 +46,19 @@ def parse_arguments():
         help="Type of input. Can be 'manga', 'subtitle', 'pdf', 'epub', 'txt' or 'generic'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files. Generic just scans through any files it finds (or the file provided) and tries to extract words from them.",
     )
     parser.add_argument(
+        '--debug',
+        type=bool,
+        required=False,
+        default=False,
+        help="Print debugging information. Default is False.",
+    )
+    parser.add_argument(
+        "--wk-key",
+        type=str,
+        required=False,
+        help="Wanikani api key for checking known words. Words of any started srs level are deemed as known."
+    )
+    parser.add_argument(
         "input_path",
         type=str,
         help="Path to the folder or file to be scanned.",

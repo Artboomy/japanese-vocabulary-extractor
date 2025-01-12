@@ -117,6 +117,11 @@ Also important: This script is not perfect. The text recognition can make mistak
 * Support other output formats
 * Improve dictionary result accuracy to include one-character-kana words when translating to english (currently filtered out due to mostly useless answers)
 
+# Development
+
+1. Install python
+2. If using Windows - install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). Nagisa [does not work](https://github.com/taishi-i/nagisa/issues/24) with latest Python on Windows
+3. Sample command - `python3 -m sample --type manga "./input/manga" --wk-key <your api key> --freq-order --furigana --add-english --debug true`
 
 # Acknowledgements
 

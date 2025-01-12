@@ -9,6 +9,7 @@ import sys
 from tqdm.contrib.concurrent import thread_map
 from multiprocessing import cpu_count
 
+from sample.wanikani import WaniKani
 # Local application imports
 from . import ocr
 from . import tokenizer
@@ -19,9 +20,9 @@ from . import epub
 
 
 def main():
-    configure_logging()
     user_args = args.parse_arguments()
     check_invalid_options(user_args)
+    configure_logging(user_args.debug)
 
     provided_path = Path(user_args.input_path)
     logging.info(f"Extracting texts from {provided_path}...")
@@ -53,14 +54,29 @@ def main():
         for value in results.values():
             combined_values.extend(value)
         results = {"all": combined_values}
-
     csvs = []
     for name, texts in results.items():
         logging.info(f"Getting vocabulary items from {name}...")
-        vocab = tokenizer.vocab_from_texts(texts, user_args.freq_order)
-        logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:10])}, ...")
+        vocab = tokenizer.vocab_from_texts(texts, user_args.freq_order, user_args.debug)
+        logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:100])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
-        csv.save_vocab_to_csv(vocab, output_file)
+        processed = []
+        if user_args.wk_key:
+            logging.info(f"Filtering words by WaniKani known words...")
+            wk_checker = WaniKani(user_args.wk_key)
+            filtered = []
+            for i in vocab:
+                if wk_checker.has_word(i):
+                    filtered.append(i)
+                else:
+                    processed.append(i)
+            logging.info(f"Filtered {len(filtered)} words, unknown words: {len(processed)}")
+            logging.debug('Filtered vocabulary items:', ', '.join(filtered))
+            logging.debug('\n')
+            logging.debug('Unfiltered vocabulary items:', ', '.join(processed))
+        else:
+            processed = vocab
+        csv.save_vocab_to_csv(processed, output_file)
         csvs.append(output_file)
 
     logging.info(
@@ -109,7 +125,7 @@ def check_invalid_options(user_args):
 
 
 def texts_from_manga(
-    provided_path: Path, is_parent: bool, separate_vols: bool
+        provided_path: Path, is_parent: bool, separate_vols: bool
 ) -> dict[str, list[str]]:
     if not provided_path.is_dir():
         logging.error("Provided path is not a directory.")
@@ -122,7 +138,7 @@ def texts_from_manga(
 
 
 def texts_from_generic_file(
-    provided_path: Path, ext: str, extract_func
+        provided_path: Path, ext: str, extract_func
 ) -> dict[str, list[str]]:
     file_texts = {}
     files = get_files(provided_path, f"{ext}")
@@ -132,7 +148,7 @@ def texts_from_generic_file(
 
 
 def texts_from_subtitles(
-    provided_path: Path,
+        provided_path: Path,
 ) -> dict[str, list[str]]:
     combined = texts_from_generic_file(provided_path, "ass", generic_extract)
     combined.update(texts_from_generic_file(provided_path, "srt", generic_extract))
@@ -155,7 +171,7 @@ def get_files(provided_path: Path, extension: str) -> list[Path]:
 
 
 def get_output_file_path(
-    provided_path: Path, type: str, is_parent: bool, add: str = ""
+        provided_path: Path, type: str, is_parent: bool, add: str = ""
 ) -> Path:
     add = f"_{add}" if add else ""
     file_name = "vocab" + add + ".csv"
@@ -171,7 +187,7 @@ def get_output_file_path(
         )
 
 
-def configure_logging() -> None:
+def configure_logging(is_debug: bool) -> None:
     handler = colorlog.StreamHandler()
     handler.setFormatter(
         colorlog.ColoredFormatter(
@@ -179,7 +195,7 @@ def configure_logging() -> None:
         )
     )
     logging.getLogger().addHandler(handler)
-    logging.getLogger().setLevel(logging.INFO)
+    logging.getLogger().setLevel(logging.DEBUG if is_debug else logging.INFO)
 
     jamdict_logger = logging.getLogger("chirptext.leutile")
     jamdict_logger.setLevel(

@@ -7,7 +7,10 @@ from jamdict import Jamdict
 
 
 def get_jamdict_instance():
-    jam = Jamdict()
+    # @see https://jamdict.readthedocs.io/_/downloads/en/latest/pdf/
+    # High-performance tuning
+    # Requires pre-release version puchikarui==0.2a1
+    jam = Jamdict(memory_mode=True)
     return jam
 
 
