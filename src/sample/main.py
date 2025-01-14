@@ -4,11 +4,14 @@
 # Standard library imports
 from pathlib import Path
 import logging
+
+import MeCab
 import colorlog
 import sys
 from tqdm.contrib.concurrent import thread_map
 from multiprocessing import cpu_count
 
+from sample.anki import AnkiWrapper
 from sample.wanikani import WaniKani
 # Local application imports
 from . import ocr
@@ -48,6 +51,10 @@ def main():
         logging.error("Invalid type provided.")
         sys.exit(1)
 
+    anki_wrapper = AnkiWrapper(user_args.anki_url)
+    anki_wrapper.select_deck()
+    wk_wrapper = WaniKani(user_args.wk_key)
+
     # If user wishes not to separate, treat as one giant file
     if not user_args.separate:
         combined_values = []
@@ -61,19 +68,19 @@ def main():
         logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:100])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
         processed = []
-        if user_args.wk_key:
-            logging.info(f"Filtering words by WaniKani known words...")
-            wk_checker = WaniKani(user_args.wk_key)
+        if anki_wrapper.is_ready() or wk_wrapper.is_ready():
+            logging.info(f"Filtering words by known words...")
             filtered = []
             for i in vocab:
-                if wk_checker.has_word(i):
+                is_known = wk_wrapper.has_word(i) or anki_wrapper.has_word(i)
+                if is_known:
                     filtered.append(i)
                 else:
                     processed.append(i)
             logging.info(f"Filtered {len(filtered)} words, unknown words: {len(processed)}")
-            logging.debug('Filtered vocabulary items:', ', '.join(filtered))
-            logging.debug('\n')
-            logging.debug('Unfiltered vocabulary items:', ', '.join(processed))
+            logging.info(f'Filtered vocabulary items:, {', '.join(filtered)}')
+            logging.info('\n')
+            logging.info(f'Unfiltered vocabulary items: {', '.join(processed)}' )
         else:
             processed = vocab
         csv.save_vocab_to_csv(processed, output_file)

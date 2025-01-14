@@ -22,6 +22,9 @@ class WaniKani:
         logging.debug("WaniKani cache path: {}".format(self.cache_root))
         self.populate()
 
+    def is_ready(self):
+        return bool(self.api_key)
+
     def __cache_exist(self):
         return os.path.isfile(self.cache_root / "cache.json")
 
@@ -40,6 +43,8 @@ class WaniKani:
             self.__get_data(data["pages"]["next_url"])
 
     def populate(self):
+        if not self.api_key:
+            return
         if self.__cache_exist():
             logging.info("Loading cached WaniKani data")
             self.cache = json.load(open(self.cache_root / "cache.json"))

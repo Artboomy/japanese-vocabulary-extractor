@@ -26,6 +26,9 @@ excluded_pos = [
     # person's name
     "名詞-固有名詞-人名"
 ]
+pos_to_from_idx = {
+    "動詞": 3
+}
 
 def vocab_from_texts(texts: list, freq_order: bool, debug: bool) -> list:
     vocab = []
@@ -47,18 +50,19 @@ def vocab_from_texts(texts: list, freq_order: bool, debug: bool) -> list:
             word_info = word.split("\t")
             if word == "EOS" or word == "" or len(word_info) < 4:
                 continue
+            pos = word_info[4]
             # The 1st element contains the word itself, while the 4th element contains the base form
             # For some reason the 4th element contains the english translation
             # for katakana-only words, so we differentiate between katakana-only
             # words and other words
+            idx = 0
+            if pos in pos_to_from_idx:
+                idx = pos_to_from_idx[pos]
             base_form = (
-                word_info[0]
-                if katakana_only_pattern.match(word_info[0])
-                else word_info[3]
+                word_info[idx]
             )
             # Sometimes the base form is followed by a hyphen and more text about word type
             base_form = base_form.split("-")[0]
-            pos = word_info[4]
             # filter by part of speech
             is_excluded_pos = pos.startswith(tuple(excluded_pos))
             is_pattern_match = confirm_japanese_pattern.match(base_form)

@@ -46,8 +46,22 @@ def parse_arguments():
         help="Type of input. Can be 'manga', 'subtitle', 'pdf', 'epub', 'txt' or 'generic'. If manga, you must provide a folder. Otherwise provide the file or a folder of multiple files. Generic just scans through any files it finds (or the file provided) and tries to extract words from them.",
     )
     parser.add_argument(
+        "--anki-url",
+        type=str,
+        required=False,
+        default=False,
+        help="Use Anki to check for known words. Requires AnkiConnect add-on installed. Example: http://192.168.0.112:8765"
+    )
+    parser.add_argument(
+        "--anki-deck",
+        type=str,
+        required=False,
+        default="",
+        help="Name of Anki deck to create. Will use Kaishi 1.5k template"
+    )
+    parser.add_argument(
         '--debug',
-        type=bool,
+        action="store_true",
         required=False,
         default=False,
         help="Print debugging information. Default is False.",
