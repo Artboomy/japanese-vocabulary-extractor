@@ -3,6 +3,8 @@ import logging
 import questionary
 import requests
 
+from sample import dictionary
+
 api_port = "8765"
 
 CARD_TYPE = {
@@ -146,16 +148,54 @@ b{color: #5586cd}"""
         logging.info("Anki model created")
         return True
 
+    def export(self, deck_name, notes):
+        logging.info(f"Exporting {len(notes)} notes to {deck_name}")
+        self.create_deck(deck_name)
+        self.create_model()
+        self.create_notes(deck_name, notes)
+
     def create_deck(self, deck_name):
         if deck_name in self.get_deck_names():
-            logging.error(f"Deck name {deck_name} already exists")
+            logging.warning(f"Deck name {deck_name} already exists")
             return False
         self.__make_request("createDeck", {"deck": deck_name})
         logging.info(f"Anki deck \"{deck_name}\" created")
         return True
 
-    def create_notes(self, notes):
-        print("Not implemented")
+    def create_notes(self, deck_name, words):
+        jamdict = dictionary.get_jamdict_instance()
+        fails = []
+        for word in words:
+            word_info = dictionary.get_word_info(word, jamdict)
+            try:
+                if not word_info["definition"]:
+                    raise Exception(f"Word has no definitions")
+                self.__make_request("addNote", {
+                    "note": {
+                        "deckName": deck_name,
+                        "modelName": model_name,
+                        "fields": {
+                            "Word": word,
+                            "Word Reading": word_info["kana"],
+                            "Word Meaning": word_info["definition"],
+                            "Word Furigana": f'{word}[{word_info["kana"]}]'
+                        },
+                        "options": {
+                            "allowDuplicate": False,
+                            "duplicateScope": "deck",
+                            "duplicateScopeOptions": {
+                                "deckName": deck_name,
+                                "checkChildren": False,
+                                "checkAllModels": False
+                            }
+                        },
+                        "tags": ["jve"]
+                    }
+                })
+            except Exception as e:
+                fails.append(word)
+                logging.error(f"Failed to add note {word}: {e}")
+        logging.info(f"Created {len(words) - len(fails)} words, fails: {fails}")
 
     def get_deck_names(self):
         if not self.check_connection():

@@ -36,6 +36,7 @@ def vocab_from_texts(texts: list, freq_order: bool, debug: bool) -> list:
 
     confirm_japanese_pattern = re.compile(r"[\p{IsHiragana}\p{IsKatakana}\p{IsHan}]+")
     katakana_only_pattern = re.compile(r"[\p{IsKatakana}]+")
+    hiragana_only_pattern = re.compile(r"[\p{IsHiragana}]+")
     pos_map = {}
     debug_file = None
     # file for debugging
@@ -56,17 +57,28 @@ def vocab_from_texts(texts: list, freq_order: bool, debug: bool) -> list:
             # for katakana-only words, so we differentiate between katakana-only
             # words and other words
             idx = 0
-            if pos in pos_to_from_idx:
-                idx = pos_to_from_idx[pos]
+            # Filtering out garbage words, for example すみません will sometimes be split to すみ　ませ　ん
+            # Looking up vocabulary for this "words" will yield unrelated results
+            # TODO: wrong conversion for ちょっと -> base form 一寸 -> wrong definition one sun (approx. 3 cm)
+            # its not filtered out by length
+            is_hiragana_short = hiragana_only_pattern.match(word_info[idx]) and len(word_info[idx]) < 4
+            if is_hiragana_short:
+                continue
             base_form = (
-                word_info[idx]
+                word_info[0]
+                if katakana_only_pattern.match(word_info[0])
+                else word_info[3]
             )
             # Sometimes the base form is followed by a hyphen and more text about word type
             base_form = base_form.split("-")[0]
+            if word_info[0] != word_info[3] and idx != 3:
+                print(word_info[0], word_info[3], pos)
             # filter by part of speech
+            # TODO: first/last names are not filtered and may yield unnecesary kanji words for learning
             is_excluded_pos = pos.startswith(tuple(excluded_pos))
             is_pattern_match = confirm_japanese_pattern.match(base_form)
-            if not is_excluded_pos and is_pattern_match:
+            is_hiragana_short = hiragana_only_pattern.match(base_form) and len(base_form) < 3
+            if not is_excluded_pos and is_pattern_match and not is_hiragana_short:
                 vocab.append(base_form)
                 if debug:
                     if pos in pos_map:

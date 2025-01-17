@@ -23,6 +23,7 @@ setup(
         "jamdict",
         "jamdict-data-fix",
         "colorlog",
+        "questionary",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

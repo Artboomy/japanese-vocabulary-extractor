@@ -19,7 +19,7 @@ def get_word_info(word: str, jam) -> dict:
     if len(result.entries) == 0:
         return {"definition": "", "kana": "", "is_real": False, "id": ""}
     definitions = result.entries[0]
-    definition_text = ", ".join(sense.text() for sense in definitions.senses[:3])
+    definition_text = ", ".join(' / '.join(sense.text().split('/')) for sense in definitions.senses[:3])
     kana_text = definitions.kana_forms[0].text
     return {
         "definition": definition_text,

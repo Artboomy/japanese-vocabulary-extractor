@@ -12,6 +12,7 @@ from tqdm.contrib.concurrent import thread_map
 from multiprocessing import cpu_count
 
 from sample.anki import AnkiWrapper
+from sample.bunpro import BunproWrapper
 from sample.wanikani import WaniKani
 # Local application imports
 from . import ocr
@@ -54,6 +55,7 @@ def main():
     anki_wrapper = AnkiWrapper(user_args.anki_url)
     anki_wrapper.select_deck()
     wk_wrapper = WaniKani(user_args.wk_key)
+    bunpro_wrapper = BunproWrapper(user_args.bunpro_words)
 
     # If user wishes not to separate, treat as one giant file
     if not user_args.separate:
@@ -68,11 +70,11 @@ def main():
         logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:100])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
         processed = []
-        if anki_wrapper.is_ready() or wk_wrapper.is_ready():
+        if anki_wrapper.is_ready() or wk_wrapper.is_ready() or bunpro_wrapper.is_ready():
             logging.info(f"Filtering words by known words...")
             filtered = []
             for i in vocab:
-                is_known = wk_wrapper.has_word(i) or anki_wrapper.has_word(i)
+                is_known = wk_wrapper.has_word(i) or anki_wrapper.has_word(i) or bunpro_wrapper.has_word(i)
                 if is_known:
                     filtered.append(i)
                 else:
@@ -80,25 +82,29 @@ def main():
             logging.info(f"Filtered {len(filtered)} words, unknown words: {len(processed)}")
             logging.info(f'Filtered vocabulary items:, {', '.join(filtered)}')
             logging.info('\n')
-            logging.info(f'Unfiltered vocabulary items: {', '.join(processed)}' )
+            logging.info(f'Unfiltered vocabulary items: {', '.join(processed)}')
         else:
             processed = vocab
-        csv.save_vocab_to_csv(processed, output_file)
-        csvs.append(output_file)
+        if anki_wrapper.is_ready() and user_args.anki_deck:
+            anki_wrapper.export(user_args.anki_deck, processed)
+        else:
+            csv.save_vocab_to_csv(processed, output_file)
+            csvs.append(output_file)
 
     logging.info(
         f"Processing CSV(s) using dictionary (this might take a few minutes, do not worry if it looks stuck)..."
     )
-    process_csvs(csvs, user_args)
+    if len(csvs):
+        process_csvs(csvs, user_args)
 
-    if user_args.separate:
-        logging.info("Combining volumes into a single CSV file...")
-        output = csv.combine_csvs(csvs)
-        csvs.append(output)
+        if user_args.separate:
+            logging.info("Combining volumes into a single CSV file...")
+            output = csv.combine_csvs(csvs)
+            csvs.append(output)
 
-    logging.info(
-        f"Vocabulary saved into: {', '.join([csv.stem for csv in csvs])} in folder {csvs[0].parent.as_posix()}"
-    )
+        logging.info(
+            f"Vocabulary saved into: {', '.join([csv.stem for csv in csvs])} in folder {csvs[0].parent.as_posix()}"
+        )
 
 
 def process_csvs(csvs, user_args):

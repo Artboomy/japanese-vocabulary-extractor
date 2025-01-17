@@ -60,6 +60,13 @@ def parse_arguments():
         help="Name of Anki deck to create. Will use Kaishi 1.5k template"
     )
     parser.add_argument(
+        "--bunpro-words",
+        type=str,
+        required=False,
+        default="",
+        help="Path to file with Bunpro known words. One word per line."
+    )
+    parser.add_argument(
         '--debug',
         action="store_true",
         required=False,
