@@ -37,6 +37,11 @@ To update, run the following command:
     pip install --upgrade japanese-vocabulary-extractor
     ``` 
 
+# Before you start
+## Clean up your source
+Manga may contain some texts about publication, preface text or anything else you may not be interested in.
+It is suggested to delete pages with this info or put black bars over, so extracted vocab will be smaller.
+
 # Usage
 
 To use the Japanese Vocabulary Extractor, follow these steps:
@@ -120,18 +125,26 @@ Also important: This script is not perfect. The text recognition can make mistak
 # Development
 
 1. Install python
-2. If using Windows - install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). Nagisa [does not work](https://github.com/taishi-i/nagisa/issues/24) with latest Python on Windows
-3. Create venv - `python3 -m venv .venv`
-4. Install dependencies - `pip install -r requirements.txt`
-5. Sample command - `cd src && python3 -m sample --type manga "./input/manga" --wk-key <your api key> --freq-order --furigana --add-english --debug`
+2. Install Rust - required to build some packages `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+3. Install `sudo apt-get install pkg-config libssl-dev`
+4. If using Windows - install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). Nagisa [does not work](https://github.com/taishi-i/nagisa/issues/24) with latest Python on Windows
+5. Create venv - `python3 -m venv .venv` and activate it - `source ./venv/bin/activate`
+6. Install dependencies - `pip install -r requirements.txt`
+7. Sample command - `cd src && python3 -m sample --type manga "./input/manga" --wk-key <your api key> --freq-order --furigana --add-english --bunpro-words "./input/bunpro.txt"`
+
+python3 -m sample 
+    --type manga 
+    "./input/manga" 
+    --wk-key <your api key> 
+    --freq-order --furigana --add-english --bunpro-words "./input/bunpro.txt"
 
 # Acknowledgements
 
 This is hardly my work, I just stringed together some amazing libraries:
 
 * mokuro, to extract lines of text from manga - https://github.com/kha-white/mokuro
-* mecab-python3, to tokenize japanese text and extract the dictionary forms - https://github.com/SamuraiT/mecab-python3
-* unidic_lite, for data necessary for mecab to work - https://github.com/polm/unidic-lite
+* ginza, to tokenize japanese text and extract the dictionary forms - https://github.com/megagonlabs/ginza
+* unidic_lite, for data necessary for mokuro to work - https://github.com/polm/unidic-lite
 * jamdict and jmdict, for the dictionary data - https://github.com/neocl/jamdict, https://www.edrdg.org/jmdict/j_jmdict.html
 
 # Support me

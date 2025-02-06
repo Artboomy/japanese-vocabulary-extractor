@@ -25,6 +25,7 @@ def process_vocab_file(
     jamdict = dictionary.get_jamdict_instance()
 
     updated_rows = []
+    log_file = open("logfile.log", "w", encoding="utf-8")
     with open(vocab_file, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
         headers = next(reader)
@@ -34,7 +35,7 @@ def process_vocab_file(
 
         for row in reader:
             word = row[0]
-            word_info = dictionary.get_word_info(word, jamdict)
+            word_info = dictionary.get_word_info(word, jamdict, log_file)
 
             # I currently decided one-letter kana words are not worth keeping in
             # because the definitions fetched for them are absolutely useless. This could
@@ -61,6 +62,8 @@ def process_vocab_file(
     with open(vocab_file, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerows(updated_rows)
+    log_file.flush()
+    log_file.close()
 
 
 def combine_csvs(csv_files: list[Path]) -> Path:

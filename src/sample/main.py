@@ -5,7 +5,6 @@
 from pathlib import Path
 import logging
 
-import MeCab
 import colorlog
 import sys
 from tqdm.contrib.concurrent import thread_map
@@ -66,29 +65,35 @@ def main():
     csvs = []
     for name, texts in results.items():
         logging.info(f"Getting vocabulary items from {name}...")
-        vocab = tokenizer.vocab_from_texts(texts, user_args.freq_order, user_args.debug)
-        logging.info(f"Vocabulary from {name}: {', '.join(list(vocab)[:100])}, ...")
+        vocab, freq = tokenizer.vocab_from_texts(texts, user_args.freq_order, user_args.debug)
+        logging.info(f"Vocabulary from {name}: {', '.join([x for x, _, _ in vocab][:100])}, ...")
         output_file = get_output_file_path(provided_path, user_args.type, True, name)
         processed = []
         if anki_wrapper.is_ready() or wk_wrapper.is_ready() or bunpro_wrapper.is_ready():
             logging.info(f"Filtering words by known words...")
             filtered = []
-            for i in vocab:
-                is_known = wk_wrapper.has_word(i) or anki_wrapper.has_word(i) or bunpro_wrapper.has_word(i)
+            for lemma, normal, pos in vocab:
+                is_known_lemma = wk_wrapper.has_word(lemma) or anki_wrapper.has_word(lemma) or bunpro_wrapper.has_word(
+                    lemma)
+                is_known_normal = wk_wrapper.has_word(normal) or anki_wrapper.has_word(
+                    normal) or bunpro_wrapper.has_word(normal)
+                if not is_known_lemma and is_known_normal:
+                    print(f"Known word: {lemma}: {normal}")
+                is_known = is_known_lemma or is_known_normal
                 if is_known:
-                    filtered.append(i)
+                    filtered.append(lemma)
                 else:
-                    processed.append(i)
+                    processed.append((lemma, pos))
             logging.info(f"Filtered {len(filtered)} words, unknown words: {len(processed)}")
             logging.info(f'Filtered vocabulary items:, {', '.join(filtered)}')
             logging.info('\n')
-            logging.info(f'Unfiltered vocabulary items: {', '.join(processed)}')
+            logging.info(f'Unfiltered vocabulary items: {', '.join([x for x, _ in processed])}')
         else:
-            processed = vocab
+            processed = [(l, p) for l, _, p in vocab]
         if anki_wrapper.is_ready() and user_args.anki_deck:
-            anki_wrapper.export(user_args.anki_deck, processed)
+            anki_wrapper.export(user_args.anki_deck, processed, freq)
         else:
-            csv.save_vocab_to_csv(processed, output_file)
+            csv.save_vocab_to_csv([x for x, _, _ in vocab], output_file)
             csvs.append(output_file)
 
     logging.info(

@@ -105,6 +105,10 @@ class AnkiWrapper:
 	<div style="font-size: 20px; padding-top:12px">Note: {{Notes}}</div>
 {{/Notes}}
 
+{{#Frequency}}
+	<div style="font-size: 14px; padding-top:12px">Frequency: {{Frequency}}</div>
+{{/Frequency}}
+
 <!-- This part enables pitch accent notes.
 
 {{#Pitch Accent Notes}}
@@ -148,11 +152,11 @@ b{color: #5586cd}"""
         logging.info("Anki model created")
         return True
 
-    def export(self, deck_name, notes):
+    def export(self, deck_name, notes, freq):
         logging.info(f"Exporting {len(notes)} notes to {deck_name}")
         self.create_deck(deck_name)
         self.create_model()
-        self.create_notes(deck_name, notes)
+        self.create_notes(deck_name, notes, freq)
 
     def create_deck(self, deck_name):
         if deck_name in self.get_deck_names():
@@ -162,11 +166,12 @@ b{color: #5586cd}"""
         logging.info(f"Anki deck \"{deck_name}\" created")
         return True
 
-    def create_notes(self, deck_name, words):
+    def create_notes(self, deck_name, words, freq):
         jamdict = dictionary.get_jamdict_instance()
         fails = []
-        for word in words:
-            word_info = dictionary.get_word_info(word, jamdict)
+        log_file = open("logfile.log", "w", encoding="utf-8")
+        for word, pos in words:
+            word_info = dictionary.get_word_info(word, jamdict, log_file, pos)
             try:
                 if not word_info["definition"]:
                     raise Exception(f"Word has no definitions")
@@ -178,7 +183,9 @@ b{color: #5586cd}"""
                             "Word": word,
                             "Word Reading": word_info["kana"],
                             "Word Meaning": word_info["definition"],
-                            "Word Furigana": f'{word}[{word_info["kana"]}]'
+                            "Word Furigana": f'{word}[{word_info["kana"]}]',
+                            "Frequency": f"dict: {word_info["frequency"]}, source: {str(freq.get(word, 0))}",
+                            "Notes": f"Original word: {word}"
                         },
                         "options": {
                             "allowDuplicate": False,
@@ -196,6 +203,8 @@ b{color: #5586cd}"""
                 fails.append(word)
                 logging.error(f"Failed to add note {word}: {e}")
         logging.info(f"Created {len(words) - len(fails)} words, fails: {fails}")
+        log_file.flush()
+        log_file.close()
 
     def get_deck_names(self):
         if not self.check_connection():

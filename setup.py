@@ -15,8 +15,9 @@ setup(
     install_requires=[
         "regex",
         "mokuro",
-        "mecab-python3",
-        "unidic-lite",
+        "ginza",
+        "ja_ginza_electra",
+        "ja_ginza",
         "pypdf",
         "ebooklib",
         "tqdm",
